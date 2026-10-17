@@ -1,0 +1,1031 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:cb="https://example.org/chembot/ontology#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#Product">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Product</rdfs:label>
+    <rdfs:subClassOf rdf:resource="https://example.org/chembot/ontology#ChemicalEntity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasCitation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#EvidenceSource"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasCitation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#HazardScenario">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">HazardScenario</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#exp_iodate_bisulfite_starch">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">요오드산 칼륨 첨가량에 따른 녹말–아황산수소염 색 변화</rdfs:label>
+    <cb:hasExperimentName>요오드산 칼륨 첨가량에 따른 녹말–아황산수소염 색 변화</cb:hasExperimentName>
+    <cb:hasGoal rdf:resource="https://example.org/chembot/ontology#goal_color_change"/>
+    <cb:belongsToCategory rdf:resource="https://example.org/chembot/ontology#category_StarchIndicator"/>
+    <cb:belongsToCategory rdf:resource="https://example.org/chembot/ontology#category_RedoxReaction"/>
+    <cb:hasPrecursorRequirement rdf:resource="https://example.org/chembot/ontology#requirement_iodate"/>
+    <cb:hasPrecursorRequirement rdf:resource="https://example.org/chembot/ontology#requirement_bisulfite"/>
+    <cb:hasPrecursorRequirement rdf:resource="https://example.org/chembot/ontology#requirement_starch"/>
+    <cb:hasProcedure rdf:resource="https://example.org/chembot/ontology#procedure_main"/>
+    <cb:hasExpectedResult rdf:resource="https://example.org/chembot/ontology#expected_blue"/>
+    <cb:requiresEquipment rdf:resource="https://example.org/chembot/ontology#equipment_beaker"/>
+    <cb:requiresEquipment rdf:resource="https://example.org/chembot/ontology#equipment_camera"/>
+    <cb:requiresEquipment rdf:resource="https://example.org/chembot/ontology#equipment_conductivity"/>
+    <cb:requiresEquipment rdf:resource="https://example.org/chembot/ontology#equipment_ph"/>
+    <cb:requiresEquipment rdf:resource="https://example.org/chembot/ontology#equipment_temperature"/>
+    <cb:hasHazardScenario rdf:resource="https://example.org/chembot/ontology#scenario_acid_bisulfite"/>
+    <cb:hasHazardScenario rdf:resource="https://example.org/chembot/ontology#scenario_iodate_combustible"/>
+    <cb:hasHazardScenario rdf:resource="https://example.org/chembot/ontology#scenario_dispensing_splash"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hazard_so2">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Hazard"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">산 접촉 시 이산화황 발생 가능성</rdfs:label>
+    <cb:hasHazardDescription>아황산수소나트륨이 산성 물질과 접촉하면 이산화황(SO2)이 방출될 수 있다.</cb:hasHazardDescription>
+    <cb:hasEvidenceStatus>chemical_hazard_general</cb:hasEvidenceStatus>
+    <cb:hasHazardFactor rdf:resource="https://example.org/chembot/ontology#factor_acid_contact"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasPhenomenon">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ReactionPhenomenon"/>
+    <rdfs:label xml:lang="en">hasPhenomenon</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#ReactionStep">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ReactionStep</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#ExperimentGoal">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ExperimentGoal</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#condition_acid_contact">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Condition"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">산성 물질과의 접촉</rdfs:label>
+    <cb:hasConditionDescription>아황산수소나트륨이 별도의 산성 물질과 접촉하는 조건. 본 실험에서 실제로 발생했다고 가정하지 않는다.</cb:hasConditionDescription>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#procedure_main">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Procedure"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">녹말-아이오딘 색 변화 관찰 절차</rdfs:label>
+    <cb:hasProcedureDescription xml:lang="ko">시약 식별 및 안전 정보 확인 → 실험 조건 설정 → 시약 혼합 → 색 변화 관찰 및 기록. 구체적인 분주량과 로봇 제어는 승인된 실험 절차에서 별도 설정한다.</cb:hasProcedureDescription>
+    <cb:hasProcedureStep rdf:resource="https://example.org/chembot/ontology#step_prepare"/>
+    <cb:hasProcedureStep rdf:resource="https://example.org/chembot/ontology#step_dispense"/>
+    <cb:hasProcedureStep rdf:resource="https://example.org/chembot/ontology#step_observe"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasGoalName">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentGoal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasGoalName</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasPrecursorRequirement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#PrecursorRequirement"/>
+    <rdfs:label xml:lang="en">hasPrecursorRequirement</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasQuantity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#PrecursorRequirement"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasQuantity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasStepNumber">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ProcedureStep"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasStepNumber</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasSMILES">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ChemicalEntity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasSMILES</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#requirement_bisulfite">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#PrecursorRequirement"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">sodium_bisulfite 요구량</rdfs:label>
+    <cb:hasRole>반응물</cb:hasRole>
+    <cb:requiresPrecursor rdf:resource="https://example.org/chembot/ontology#chemical_sodium_bisulfite"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#category_StarchIndicator">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ExperimentCategory"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">녹말 지시약 실험</rdfs:label>
+    <cb:hasCategoryName>녹말 지시약 실험</cb:hasCategoryName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#category_MetalIonColorChange">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ExperimentCategory"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">금속 이온 색 변화</rdfs:label>
+    <cb:hasCategoryName>금속 이온 색 변화</cb:hasCategoryName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasRecordedAt">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentRun"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasRecordedAt</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#chemical_bisulfite_ion">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ChemicalEntity"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">아황산수소 이온</rdfs:label>
+    <cb:hasChemicalFormula>HSO3-</cb:hasChemicalFormula>
+    <cb:hasSMILES>O=S([O-])O</cb:hasSMILES>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#scenario_dispensing_splash">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#HazardScenario"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">시약 분주·혼합 시 비산 노출</rdfs:label>
+    <cb:hasTriggerDescription>분주·혼합 과정에서 액적이 튀는 경우의 노출 위험</cb:hasTriggerDescription>
+    <cb:hasEvidenceStatus>conditional_preexperiment_hazard</cb:hasEvidenceStatus>
+    <cb:hasHazard rdf:resource="https://example.org/chembot/ontology#hazard_irritation"/>
+    <cb:triggeredUnder rdf:resource="https://example.org/chembot/ontology#conditions_splash"/>
+    <cb:hasSafetyConstraint rdf:resource="https://example.org/chembot/ontology#constraint_splash_protection"/>
+    <cb:involvesChemical rdf:resource="https://example.org/chembot/ontology#chemical_potassium_iodate"/>
+    <cb:involvesChemical rdf:resource="https://example.org/chembot/ontology#chemical_sodium_bisulfite"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#scenario_iodate_combustible">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#HazardScenario"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">요오드산 칼륨의 가연물 접촉</rdfs:label>
+    <cb:hasTriggerDescription>산화성 시약의 보관 및 준비 단계에서 부적절한 가연물 접촉 위험</cb:hasTriggerDescription>
+    <cb:hasEvidenceStatus>conditional_preexperiment_hazard</cb:hasEvidenceStatus>
+    <cb:hasHazard rdf:resource="https://example.org/chembot/ontology#hazard_oxidizer"/>
+    <cb:triggeredUnder rdf:resource="https://example.org/chembot/ontology#conditions_combustible_contact"/>
+    <cb:hasSafetyConstraint rdf:resource="https://example.org/chembot/ontology#constraint_segregate_oxidizer"/>
+    <cb:involvesChemical rdf:resource="https://example.org/chembot/ontology#chemical_potassium_iodate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#reactionUses">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ReactionStep"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ChemicalEntity"/>
+    <rdfs:label xml:lang="en">reactionUses</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#scenario_acid_bisulfite">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#HazardScenario"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">아황산수소나트륨의 산 접촉 시 SO2 방출</rdfs:label>
+    <cb:hasTriggerDescription>별도의 산성 물질과 접촉할 경우에 해당하는 조건부 위험</cb:hasTriggerDescription>
+    <cb:hasEvidenceStatus>conditional_preexperiment_hazard</cb:hasEvidenceStatus>
+    <cb:hasHazard rdf:resource="https://example.org/chembot/ontology#hazard_so2"/>
+    <cb:triggeredUnder rdf:resource="https://example.org/chembot/ontology#conditions_acid_contact"/>
+    <cb:hasSafetyConstraint rdf:resource="https://example.org/chembot/ontology#constraint_avoid_acids"/>
+    <cb:involvesChemical rdf:resource="https://example.org/chembot/ontology#chemical_sodium_bisulfite"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasOutcome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentRun"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasOutcome</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasHazardScenarioAtStep">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">hasHazardScenarioAtStep</rdfs:label>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ProcedureStep"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#HazardScenario"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasProductName">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Product"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasProductName</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasObservation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ObservedResult"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasObservation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#chemical_potassium_iodate">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Precursor"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">요오드산 칼륨</rdfs:label>
+    <cb:hasChemicalFormula>KIO3</cb:hasChemicalFormula>
+    <cb:hasCAS>7758-05-6</cb:hasCAS>
+    <cb:hasSMILES>[K+].[O-][I+2]([O-])[O-]</cb:hasSMILES>
+    <cb:hasHazard rdf:resource="https://example.org/chembot/ontology#hazard_oxidizer"/>
+    <cb:hasHazard rdf:resource="https://example.org/chembot/ontology#hazard_irritation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#step_dispense">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ProcedureStep"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">시약 분주 및 혼합</rdfs:label>
+    <cb:hasStepOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</cb:hasStepOrder>
+    <cb:hasHazardScenarioAtStep rdf:resource="https://example.org/chembot/ontology#scenario_dispensing_splash"/>
+    <cb:hasHazardAtStep rdf:resource="https://example.org/chembot/ontology#hazard_irritation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#involvesChemical">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#HazardScenario"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ChemicalEntity"/>
+    <rdfs:label xml:lang="en">involvesChemical</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#condition_splash">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Condition"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">분주·혼합 중 비산</rdfs:label>
+    <cb:hasConditionDescription>액체 시약 분주 또는 혼합 과정에서 액적이 튀는 조건</cb:hasConditionDescription>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#event_skin_eye_contact">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#HazardEvent"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">시약의 눈·피부 접촉</rdfs:label>
+    <cb:hasRiskConsequence rdf:resource="https://example.org/chembot/ontology#consequence_irritation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasRole">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#PrecursorRequirement"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasRole</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasGHSCode">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Hazard"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasGHSCode</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasEquation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ReactionStep"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasEquation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#producesProduct">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#Product"/>
+    <rdfs:label xml:lang="en">producesProduct</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#chemical_iodide_ion">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Product"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">요오드화 이온</rdfs:label>
+    <cb:hasChemicalFormula>I-</cb:hasChemicalFormula>
+    <cb:hasSMILES>[I-]</cb:hasSMILES>
+    <cb:hasProductName>요오드화 이온</cb:hasProductName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasTriggerDescription">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">hasTriggerDescription</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#chemical_hydrogen_ion">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Product"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">수소 이온</rdfs:label>
+    <cb:hasChemicalFormula>H+</cb:hasChemicalFormula>
+    <cb:hasSMILES>[H+]</cb:hasSMILES>
+    <cb:hasProductName>수소 이온</cb:hasProductName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#conditions_combustible_contact">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ConditionSet"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">condition_combustible_contact 조건 집합</rdfs:label>
+    <cb:hasCondition rdf:resource="https://example.org/chembot/ontology#condition_combustible_contact"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#supportedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentRun"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#EvidenceSource"/>
+    <rdfs:label xml:lang="en">supportedBy</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#requiresEquipment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#Equipment"/>
+    <rdfs:label xml:lang="en">requiresEquipment</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#requirement_iodate">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#PrecursorRequirement"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">potassium_iodate 요구량</rdfs:label>
+    <cb:hasRole>반응물</cb:hasRole>
+    <cb:requiresPrecursor rdf:resource="https://example.org/chembot/ontology#chemical_potassium_iodate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#nextStep">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ProcedureStep"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ProcedureStep"/>
+    <rdfs:label xml:lang="en">nextStep</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#constraint_splash_protection">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#SafetyConstraint"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">비산 노출 방지</rdfs:label>
+    <cb:hasSafetyDescription>분주·혼합 과정에서 보안경과 적합한 보호장갑을 사용하고 비산을 방지한다.</cb:hasSafetyDescription>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasCategoryName">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentCategory"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasCategoryName</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#chemical_sulfate_ion">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Product"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">황산 이온</rdfs:label>
+    <cb:hasChemicalFormula>SO4(2-)</cb:hasChemicalFormula>
+    <cb:hasSMILES>O=S(=O)([O-])[O-]</cb:hasSMILES>
+    <cb:hasProductName>황산 이온</cb:hasProductName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#equipment_conductivity">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Equipment"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">전도도 프로브</rdfs:label>
+    <cb:hasInstrumentName>전도도 프로브</cb:hasInstrumentName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasDuration">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentRun"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasDuration</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#chemical_iodate_ion">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ChemicalEntity"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">요오드산 이온</rdfs:label>
+    <cb:hasChemicalFormula>IO3-</cb:hasChemicalFormula>
+    <cb:hasSMILES>[O-][I+2]([O-])[O-]</cb:hasSMILES>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#reactionProduces">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ReactionStep"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ChemicalEntity"/>
+    <rdfs:label xml:lang="en">reactionProduces</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasHazard">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#HazardScenario"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#Hazard"/>
+    <rdfs:label xml:lang="en">hasHazard</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasExperimentName">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasExperimentName</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#ChemicalEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ChemicalEntity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasRelatedHazard">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">hasRelatedHazard</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#chemical_starch">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Precursor"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">녹말</rdfs:label>
+    <cb:hasChemicalFormula>(C6H10O5)n</cb:hasChemicalFormula>
+    <cb:hasCAS>9005-25-8</cb:hasCAS>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasInventoryAmount">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#InventoryItem"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasInventoryAmount</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasMeasurement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentRun"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#Measurement"/>
+    <rdfs:label xml:lang="en">hasMeasurement</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasExpectedResult">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ExpectedResult"/>
+    <rdfs:label xml:lang="en">hasExpectedResult</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#condition_combustible_contact">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Condition"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">가연물과의 부적절한 접촉</rdfs:label>
+    <cb:hasConditionDescription>산화성 시약과 가연성 물질이 접촉하는 조건</cb:hasConditionDescription>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasMetric">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Measurement"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasMetric</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasSafetyConstraint">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#HazardScenario"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#SafetyConstraint"/>
+    <rdfs:label xml:lang="en">hasSafetyConstraint</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hazard_irritation">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Hazard"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">시약 비산에 따른 눈·피부 자극</rdfs:label>
+    <cb:hasHazardDescription>시약 분주 및 혼합 중 액적이 눈·피부에 닿을 수 있다. 구체적인 유해성 분류는 사용 제품 SDS를 따른다.</cb:hasHazardDescription>
+    <cb:hasEvidenceStatus>procedure_exposure_risk</cb:hasEvidenceStatus>
+    <cb:hasHazardFactor rdf:resource="https://example.org/chembot/ontology#factor_liquid_splash"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasStatus">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#HazardScenario"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasStatus</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasRequiredVolume">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#PrecursorRequirement"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasRequiredVolume</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#Precursor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Precursor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="https://example.org/chembot/ontology#ChemicalEntity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasRateNote">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ReactionStep"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasRateNote</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#belongsToCategory">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ExperimentCategory"/>
+    <rdfs:label xml:lang="en">belongsToCategory</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasProcedureStep">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">hasProcedureStep</rdfs:label>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Procedure"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ProcedureStep"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hazard_oxidizer">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Hazard"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">산화성 물질과 가연물 접촉 위험</rdfs:label>
+    <cb:hasHazardDescription>요오드산 칼륨은 산화성 물질로 가연물 또는 환원성 물질과의 부적절한 접촉 시 화재 위험이 증가할 수 있다.</cb:hasHazardDescription>
+    <cb:hasEvidenceStatus>chemical_hazard_general</cb:hasEvidenceStatus>
+    <cb:hasHazardFactor rdf:resource="https://example.org/chembot/ontology#factor_combustible_contact"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#mayCause">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">mayCause</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#consequence_respiratory">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#RiskConsequence"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">호흡기 자극 및 흡입 노출</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#SafetyConstraint">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">SafetyConstraint</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasConditionText">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Condition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasConditionText</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#category_PrecipitationReaction">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ExperimentCategory"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">침전 생성 반응</rdfs:label>
+    <cb:hasCategoryName>침전 생성 반응</cb:hasCategoryName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#expected_blue">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ExpectedResult"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">청람색 전환 목표</rdfs:label>
+    <cb:hasInitialColor>투명한 용액</cb:hasInitialColor>
+    <cb:hasFinalColor>청람색</cb:hasFinalColor>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasHazardAtStep">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">hasHazardAtStep</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasLabel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasLabel</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasNote">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#EvidenceSource"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasNote</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#chemical_sodium_bisulfite">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Precursor"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">아황산수소나트륨</rdfs:label>
+    <cb:hasChemicalFormula>NaHSO3</cb:hasChemicalFormula>
+    <cb:hasCAS>7631-90-5</cb:hasCAS>
+    <cb:hasSMILES>O=S([O-])O.[Na+]</cb:hasSMILES>
+    <cb:hasHazard rdf:resource="https://example.org/chembot/ontology#hazard_so2"/>
+    <cb:hasHazard rdf:resource="https://example.org/chembot/ontology#hazard_irritation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#Procedure">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Procedure</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#equipment_ph">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Equipment"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">pH 프로브</rdfs:label>
+    <cb:hasInstrumentName>pH 프로브</cb:hasInstrumentName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasChemicalFormula">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ChemicalEntity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasChemicalFormula</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#constraint_segregate_oxidizer">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#SafetyConstraint"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">산화제와 가연물 분리</rdfs:label>
+    <cb:hasSafetyDescription>산화성 시약을 가연물과 분리하여 취급·보관하고 제품 SDS의 혼합 금지 조건을 따른다.</cb:hasSafetyDescription>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasFinalColor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExpectedResult"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasFinalColor</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#factor_combustible_contact">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#HazardFactor"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">가연물과 접촉</rdfs:label>
+    <cb:hasDescription xml:lang="ko">산화성 시약과 가연물의 부적절한 접촉 조건에서 화재 위험이 증가할 수 있다.</cb:hasDescription>
+    <cb:mayCause rdf:resource="https://example.org/chembot/ontology#event_oxidizer_reaction"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasProcedure">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#Procedure"/>
+    <rdfs:label xml:lang="en">hasProcedure</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#HazardFactor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">HazardFactor</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#factor_acid_contact">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#HazardFactor"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">산성 물질과 접촉</rdfs:label>
+    <cb:hasDescription xml:lang="ko">산성 물질과 접촉할 때 SO₂가 방출될 수 있다. 이 조건은 실제 발생을 의미하지 않는다.</cb:hasDescription>
+    <cb:mayCause rdf:resource="https://example.org/chembot/ontology#event_so2_release"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#step_prepare">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ProcedureStep"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">시약 확인 및 준비</rdfs:label>
+    <cb:hasStepOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</cb:hasStepOrder>
+    <cb:hasHazardScenarioAtStep rdf:resource="https://example.org/chembot/ontology#scenario_acid_bisulfite"/>
+    <cb:hasHazardScenarioAtStep rdf:resource="https://example.org/chembot/ontology#scenario_iodate_combustible"/>
+    <cb:hasHazardAtStep rdf:resource="https://example.org/chembot/ontology#hazard_so2"/>
+    <cb:hasHazardAtStep rdf:resource="https://example.org/chembot/ontology#hazard_oxidizer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#HazardEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">HazardEvent</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#requiresPrecursor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#PrecursorRequirement"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#Precursor"/>
+    <rdfs:label xml:lang="en">requiresPrecursor</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#equipment_beaker">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Equipment"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">100 mL 반응 비커</rdfs:label>
+    <cb:hasInstrumentName>100 mL 반응 비커</cb:hasInstrumentName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasReactionStep">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ReactionStep"/>
+    <rdfs:label xml:lang="en">hasReactionStep</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#equipment_camera">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Equipment"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">카메라 ROI</rdfs:label>
+    <cb:hasInstrumentName>카메라 ROI</cb:hasInstrumentName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#runOf">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentRun"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdfs:label xml:lang="en">runOf</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasTemperature">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Condition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasTemperature</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasRiskConsequence">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">hasRiskConsequence</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#ExpectedResult">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ExpectedResult</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasSource">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#HazardScenario"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#EvidenceSource"/>
+    <rdfs:label xml:lang="en">hasSource</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasStep">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Procedure"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ProcedureStep"/>
+    <rdfs:label xml:lang="en">hasStep</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasHypothesis">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#AgentAction"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#Hypothesis"/>
+    <rdfs:label xml:lang="en">hasHypothesis</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasActionDetail">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#AgentAction"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasActionDetail</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#ExperimentCategory">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ExperimentCategory</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasMeasurementCount">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentRun"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasMeasurementCount</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasHazardScenario">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#HazardScenario"/>
+    <rdfs:label xml:lang="en">hasHazardScenario</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasInstrumentName">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Equipment"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasInstrumentName</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#ExperimentDetail">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ExperimentDetail</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#ReactionPhenomenon">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ReactionPhenomenon</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasInitialColor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExpectedResult"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasInitialColor</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#category_Thermochromism">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ExperimentCategory"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">열에 의한 색 변화</rdfs:label>
+    <cb:hasCategoryName>열에 의한 색 변화</cb:hasCategoryName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasSafetyDescription">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">hasSafetyDescription</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#EvidenceSource">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">EvidenceSource</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasAgentAction">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentRun"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#AgentAction"/>
+    <rdfs:label xml:lang="en">hasAgentAction</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasElapsedTime">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Measurement"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasElapsedTime</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasDescription">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Hazard"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasDescription</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasPressure">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Condition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasPressure</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#performedUnder">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ConditionSet"/>
+    <rdfs:label xml:lang="en">performedUnder</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#chemical_water">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Product"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">물</rdfs:label>
+    <cb:hasChemicalFormula>H2O</cb:hasChemicalFormula>
+    <cb:hasSMILES>O</cb:hasSMILES>
+    <cb:hasProductName>물</cb:hasProductName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#event_oxidizer_reaction">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#HazardEvent"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">산화성 물질과 가연물의 부적절한 반응</rdfs:label>
+    <cb:hasRiskConsequence rdf:resource="https://example.org/chembot/ontology#consequence_fire"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#constraint_avoid_acids">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#SafetyConstraint"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">산성 물질과 분리</rdfs:label>
+    <cb:hasSafetyDescription>아황산수소나트륨과 산성 물질의 의도하지 않은 접촉을 방지하고 해당 물질 SDS 및 실험실 안전 절차를 따른다.</cb:hasSafetyDescription>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#step_observe">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ProcedureStep"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">반응 관찰 및 기록</rdfs:label>
+    <cb:hasStepOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</cb:hasStepOrder>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#triggeredUnder">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#HazardScenario"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ConditionSet"/>
+    <rdfs:label xml:lang="en">triggeredUnder</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasObservedResult">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentRun"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ObservedResult"/>
+    <rdfs:label xml:lang="en">hasObservedResult</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#PrecursorRequirement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">PrecursorRequirement</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasValue">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Measurement"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasValue</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasHazardFactor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">hasHazardFactor</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#category_RedoxReaction">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ExperimentCategory"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">산화환원 반응</rdfs:label>
+    <cb:hasCategoryName>산화환원 반응</cb:hasCategoryName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#Equipment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Equipment</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#ConditionSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ConditionSet</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#Hypothesis">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Hypothesis</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasConditionDescription">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">hasConditionDescription</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasStatement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Hypothesis"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasStatement</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#category_ProteinIndicator">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ExperimentCategory"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">단백질 지시약 실험</rdfs:label>
+    <cb:hasCategoryName>단백질 지시약 실험</cb:hasCategoryName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasCondition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ConditionSet"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#Condition"/>
+    <rdfs:label xml:lang="en">hasCondition</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#Hazard">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Hazard</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#equipment_temperature">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Equipment"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">온도 프로브</rdfs:label>
+    <cb:hasInstrumentName>온도 프로브</cb:hasInstrumentName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#chemical_iodine">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#Product"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">요오드 분자</rdfs:label>
+    <cb:hasChemicalFormula>I2</cb:hasChemicalFormula>
+    <cb:hasSMILES>II</cb:hasSMILES>
+    <cb:hasProductName>요오드 분자</cb:hasProductName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#category_ComplexFormation">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ExperimentCategory"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">착물 형성 반응</rdfs:label>
+    <cb:hasCategoryName>착물 형성 반응</cb:hasCategoryName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#category_AcidBaseIndicator">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ExperimentCategory"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">산염기 지시약 실험</rdfs:label>
+    <cb:hasCategoryName>산염기 지시약 실험</cb:hasCategoryName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasEvidenceStatus">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Hypothesis"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasEvidenceStatus</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasConcentration">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#PrecursorRequirement"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasConcentration</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasRunID">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentRun"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasRunID</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasGoal">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ExperimentDetail"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ExperimentGoal"/>
+    <rdfs:label xml:lang="en">hasGoal</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasHazardDescription">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">hasHazardDescription</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#Measurement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Measurement</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#consequence_fire">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#RiskConsequence"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">화재 위험 증가</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#conditions_acid_contact">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ConditionSet"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">condition_acid_contact 조건 집합</rdfs:label>
+    <cb:hasCondition rdf:resource="https://example.org/chembot/ontology#condition_acid_contact"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#event_so2_release">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#HazardEvent"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">이산화황 기체 발생</rdfs:label>
+    <cb:hasRiskConsequence rdf:resource="https://example.org/chembot/ontology#consequence_respiratory"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasSafetyText">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#SafetyConstraint"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasSafetyText</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasTime">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Condition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasTime</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#consequence_irritation">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#RiskConsequence"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">눈·피부 자극 가능성</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#RiskConsequence">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">RiskConsequence</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#InventoryItem">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">InventoryItem</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#conditions_splash">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ConditionSet"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">condition_splash 조건 집합</rdfs:label>
+    <cb:hasCondition rdf:resource="https://example.org/chembot/ontology#condition_splash"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#inventoryOf">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#InventoryItem"/>
+    <rdfs:range rdf:resource="https://example.org/chembot/ontology#ChemicalEntity"/>
+    <rdfs:label xml:lang="en">inventoryOf</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasActionType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#AgentAction"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasActionType</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#AgentAction">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">AgentAction</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#ProcedureStep">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ProcedureStep</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasActionTime">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#AgentAction"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasActionTime</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#goal_color_change">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#ExperimentGoal"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">색 변화 실험</rdfs:label>
+    <cb:hasGoalName>색 변화 실험</cb:hasGoalName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasCAS">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ChemicalEntity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasCAS</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#factor_liquid_splash">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#HazardFactor"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">액체 시약 비산</rdfs:label>
+    <cb:hasDescription xml:lang="ko">분주 및 혼합 중 비산으로 눈·피부 노출이 발생할 수 있다.</cb:hasDescription>
+    <cb:mayCause rdf:resource="https://example.org/chembot/ontology#event_skin_eye_contact"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#ObservedResult">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ObservedResult</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasProcedureDescription">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#ProcedureStep"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasProcedureDescription</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasUnit">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="https://example.org/chembot/ontology#Measurement"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label xml:lang="en">hasUnit</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#requirement_starch">
+    <rdf:type rdf:resource="https://example.org/chembot/ontology#PrecursorRequirement"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdfs:label xml:lang="ko">starch 요구량</rdfs:label>
+    <cb:hasRole>지시약</cb:hasRole>
+    <cb:requiresPrecursor rdf:resource="https://example.org/chembot/ontology#chemical_starch"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#ExperimentRun">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ExperimentRun</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#Condition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Condition</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://example.org/chembot/ontology#hasStepOrder">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">hasStepOrder</rdfs:label>
+  </rdf:Description>
+</rdf:RDF>
