@@ -68,8 +68,8 @@
 
 | <img src="assets/team/team1.png" width="120" alt="멘티 1"> | <img src="assets/team/team2.png" width="120" alt="멘티 2"> | <img src="assets/team/team3.png" width="120" alt="멘티 3"> | <img src="assets/team/team4.png" width="120" alt="멘티 4"> | <img src="assets/team/team5.png" width="120" alt="멘티 5"> |
 |:---:|:---:|:---:|:---:|:---:|
-| 팀장<br>프론트엔드 | 하드웨어·로봇 구동<br>백엔드 | 프론트엔드<br>데이터 수집 | 온톨로지 구축<br>화학 도메인 지식 | 백엔드 |
 | **멘티 1** | **멘티 2** | **멘티 3** | **멘티 4** | **멘티 5** |
+| 팀장<br>프론트엔드 | 하드웨어·로봇 구동<br>백엔드 | 프론트엔드<br>데이터 수집 | 온톨로지 구축<br>화학 도메인 지식 | 백엔드 |
 
 ---
 
