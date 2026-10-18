@@ -212,6 +212,8 @@ flowchart LR
 
 [![프로젝트 소개영상](https://img.youtube.com/vi/Cck1FFFvAGc/maxresdefault.jpg)](https://www.youtube.com/watch?v=Cck1FFFvAGc)
 
+### 로봇
+
 ### 웹 UI
 
 | 화면 | 기능 | 설명 |
@@ -220,14 +222,6 @@ flowchart LR
 | <img src="assets/ui/실험%20구성.png" width="420" alt="실험 구성 화면"> | **실험 구성** | 대화로 시약·기구·장비 구성, 위험 등급, 재고를 확인하고 구성 확정 |
 | <img src="assets/ui/대시보드.png" width="420" alt="실험 대시보드"> | **모니터링** | 진행 단계, pH·EC·TDS·온도 센서값, 카메라 영상, 장비 로그, 위험 정보를 실시간 확인하고 일시정지·비상정지 |
 | <img src="assets/ui/보고서.png" width="420" alt="결과 보고서"> | **결과 보고서** | 실행 요약, 사용 재료·위험, 절차, 센서 변화(pH·전도도), 타임라인을 정리하고 센서 CSV·PDF로 저장 |
-
-### Isaac Sim 시뮬레이션
-
-<!-- 가상환경 및 VR 조작 시연 이미지 또는 영상과 설명을 추가하세요. -->
-
-### 스마트폰 표정
-
-<!-- 상태별 표정 이미지 또는 시연 영상과 설명을 추가하세요. -->
 
 ---
 
