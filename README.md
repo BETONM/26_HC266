@@ -225,32 +225,15 @@ flowchart LR
 
 ## 5. 핵심 소스코드
 
-각 기능의 개발 저장소에서 실제 소스코드를 가져와 아래와 같이 구성했습니다. 원본 모듈의 내부 구조와 의존성 정의는 유지했습니다. **이 저장소는 소스 취합본이며, 모듈 간 전체 연동 및 실물 장비 실행은 검증하지 않았습니다.** 웹 UI에는 원본의 mock/http 어댑터가 함께 포함되어 있습니다.
+### 기능별 구현 설명
 
-| 구성 | 코드 위치 | 주요 구현 | 원본 저장소 |
-|---|---|---|---|
-| AI Agent | [src/backend/agent](src/backend/agent) | 자연어 요청 처리, 작업 계획, 런타임, 장비 어댑터, API | [armchemist_agent](https://github.com/armchemist/armchemist_agent) |
-| 온톨로지 | [ArmChemist_GraphDB.owl](src/backend/ontology/ArmChemist_GraphDB.owl) | 기존 화학 도메인 온톨로지 | 기존 파일 유지 |
-| 웹 대시보드 | [src/frontend](src/frontend) | React·TypeScript 채팅, 지식 그래프, 실행 모니터링, 보고서 | [NewUI](https://github.com/armchemist/NewUI) |
-| 센서·레일 서버 | [src/pi_sensor](src/pi_sensor) | pH·전도도·열화상 관측, 레일 제어, 중앙 서버 | [PiSensorServer](https://github.com/armchemist/PiSensorServer) |
-| 로봇 제어 서버 | [src/robot](src/robot) | 로봇 장치 API, 카메라 스트림, 장비 설정 | [PiRobotControl](https://github.com/armchemist/PiRobotControl) |
-| 스마트폰 얼굴 | [src/robot_face](src/robot_face) | Flutter 표정·카메라 화면, 서버 연결 | [humanoid_haed_app](https://github.com/armchemist/humanoid_haed_app) |
-| 모방학습 | [src/imitation_learning](src/imitation_learning) | 시연 데이터 기반 학습 스크립트와 학습 의존성 | [ImitationLearning](https://github.com/armchemist/ImitationLearning) |
-| 시뮬레이션 | [src/simulation](src/simulation) | Blender 배치 생성, Gazebo 모델·월드, ROS 2 launch | [SimulationEnv](https://github.com/armchemist/SimulationEnv) |
+<!-- 아래 항목을 기능별로 복사해 작성하세요. -->
 
-#### 주요 코드 진입점
+#### [기능명]
 
-- **Agent:** [api.py](src/backend/agent/armchemist/api.py), [planning.py](src/backend/agent/armchemist/planning.py), [runtime.py](src/backend/agent/armchemist/runtime.py)
-- **웹:** [App.tsx](src/frontend/src/app/App.tsx), [어댑터](src/frontend/src/adapters), [그래프 렌더링](src/frontend/src/graph/canvas), [보고서](src/frontend/src/report)
-- **센서:** [중앙 서버](src/pi_sensor/central/main.py), [센서 서버](src/pi_sensor/server/main.py), [Arduino 펌웨어](src/pi_sensor/sensors/arduino_sensors/arduino_sensors.ino)
-- **로봇:** [제어 API](src/robot/server/main.py), [카메라](src/robot/server/hardware/camera.py)
-- **얼굴 앱:** [main.dart](src/robot_face/lib/main.dart), [face_screen.dart](src/robot_face/lib/face_screen.dart)
-- **학습:** [omx_learning.py](src/imitation_learning/omx_learning.py)
-- **시뮬레이션:** [배치 생성](src/simulation/blender/scripts/build_layout.py), [ROS 2 실행](src/simulation/ros2/simulation_env_bringup/launch/lab_bench.launch.py)
-
-각 모듈의 설정과 실행 방법은 해당 폴더의 README를 참고하세요. 시뮬레이션 취합본은 **Gazebo/ROS 2 기반**이며, 상단의 Isaac Sim·VR 설명과는 구분됩니다. 체크포인트와 대용량 학습 데이터는 포함하지 않습니다.
-
-가져온 커밋, 파일 수, 제외 항목은 [소스 취합 기록](docs/source-imports.json)에 남겼습니다. 원본 `.git`, 개발 에이전트 설정, UI 재작성 프롬프트·시안, Blender 원본 `.blend`, 노트북은 제외했습니다. 비밀값은 포함하지 않고 `.env.example`만 보존합니다.
+- **기능 설명:**
+- **동작 흐름:**
+- **주요 모듈:**
 
 ---
 
