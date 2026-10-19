@@ -1,0 +1,16 @@
+/*
+ * Pretendard의 동적 서브셋에는 화학식에 쓰는 아래·위 첨자 일부(₀ ₅ ₆ ₙ ⁰ 등)와 µ가 빠져 있다.
+ * 빠지면 그 글자만 시스템 글꼴로 그려져 '(C₆H₁₀O₅)ₙ'이 두 글꼴로 섞인다. 전체 글꼴(약 2MB)을
+ * 받는 대신 그 범위만 잘라 낸 8KB 파일을 같은 family 이름으로 덧붙인다(SIL OFL, Pretendard-LICENSE.txt).
+ *
+ * 다시 만들기: pyftsubset PretendardVariable.woff2 --unicodes="U+2070-209F,U+00B5" \
+ *   --flavor=woff2 --layout-features='*' --output-file=PretendardVariable.formula.woff2
+ */
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/fonts/PretendardVariable.formula.woff2') format('woff2-variations');
+  unicode-range: U+2070-209F, U+00B5;
+}

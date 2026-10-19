@@ -1,0 +1,678 @@
+/*
+ * 화면 셸: 레일 | 채팅 카드 | 그래프 카드 | 요약 열. 카드는 모두 .app 안에서 절대 위치로 놓는다.
+ * 그래프 카드의 자리는 --g-* 네 값이 정하고, 그래프 SVG·테두리·머리·보이는 영역이 모두 이 값을 따른다.
+ * 첫 화면은 레일 옆 전체가 그래프 카드(히어로)이고, 진입하면 이 값만 바뀌어 카드가 가운데로 줄어든다.
+ */
+
+#root {
+  container-type: inline-size;
+  container-name: app;
+}
+
+.app {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--surface);
+  --g-top: var(--gap);
+  --g-bottom: var(--gap);
+  --g-left: calc(var(--gap) * 2 + var(--rail-width));
+  --g-right: var(--gap);
+  --g-head: var(--graph-head-landing);
+  --g-foot: var(--graph-foot-landing);
+}
+
+.app[data-screen='workspace'] {
+  --g-left: calc(var(--gap) * 3 + var(--rail-width) + var(--chat-width));
+  --g-right: calc(var(--gap) * 2 + var(--side-width));
+  --g-head: var(--graph-head);
+  --g-foot: 0px;
+}
+
+/* ── 레일: 작업 단계. 첫 화면에도 남아 앱의 뼈대를 보여 준다 ── */
+
+.rail {
+  position: absolute;
+  z-index: 3;
+  top: var(--gap);
+  bottom: var(--gap);
+  left: var(--gap);
+  width: var(--rail-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+  border-radius: var(--radius-pill);
+  background: var(--highlight);
+}
+
+.rail-logo {
+  display: grid;
+  place-items: center;
+  width: var(--rail-button);
+  height: var(--rail-button);
+  border-radius: var(--radius-panel);
+  /* 그라데이션은 히어로와 위험 카드에만. 로고는 단색으로 둔다. */
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.rail-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+.rail-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  width: var(--rail-width);
+  padding: 0;
+  color: var(--content-secondary);
+  font-size: var(--text-caption);
+  line-height: var(--leading-caption);
+  font-weight: var(--weight-label);
+  cursor: pointer;
+  outline: none;
+}
+
+.rail-tab-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--rail-button);
+  height: var(--rail-button);
+  border-radius: var(--radius-pill);
+}
+
+.rail-tab[data-hovered]:not([data-disabled], [data-selected]) .rail-tab-icon {
+  background: var(--surface-raised);
+}
+
+/* 현재 단계: 파란 원 + 진한 글자. 강제 색상 모드에서도 남도록 테두리를 함께 둔다. */
+.rail-tab[data-selected] {
+  color: var(--content);
+}
+
+.rail-tab[data-selected] .rail-tab-icon {
+  background: var(--accent);
+  color: var(--on-accent);
+  outline: var(--border-width) solid var(--accent);
+}
+
+.rail-tab[data-disabled] {
+  color: var(--content-disabled);
+  cursor: not-allowed;
+}
+
+.rail-lock {
+  position: absolute;
+  right: var(--space-half);
+  bottom: var(--space-half);
+}
+
+.rail-tab[data-focus-visible] .rail-tab-icon {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.rail-new-chat {
+  display: grid;
+  place-items: center;
+  width: var(--rail-button);
+  height: var(--rail-button);
+  margin-top: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  color: var(--content);
+  cursor: pointer;
+}
+
+.rail-new-chat[data-hovered] {
+  background: var(--surface-hover);
+}
+
+/* ── 채팅 카드: 작업 화면에서 레일 옆에 열린다 ── */
+
+.chat-card {
+  position: absolute;
+  z-index: 2;
+  top: var(--gap);
+  bottom: var(--gap);
+  left: calc(var(--gap) * 2 + var(--rail-width));
+  width: var(--chat-width);
+  display: flex;
+  flex-direction: column;
+  border: var(--border-width) solid var(--separator);
+  border-radius: var(--radius-card-large);
+  background: var(--surface-raised);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(calc(-1 * var(--space-4)));
+  transition:
+    opacity var(--motion-fade) var(--ease-enter),
+    transform var(--motion-enter) var(--ease-enter),
+    visibility 0s var(--motion-enter);
+}
+
+.app[data-screen='workspace'] .chat-card {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity var(--motion-fade) var(--ease-enter) var(--motion-delay),
+    transform var(--motion-enter) var(--ease-enter) var(--motion-delay);
+}
+
+.chat-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-5) var(--space-5) var(--space-1);
+}
+
+.chat-title {
+  margin: 0;
+  color: var(--heading);
+  font-size: var(--text-title3);
+  line-height: var(--leading-title3);
+  font-weight: var(--weight-title3);
+}
+
+.chat-log-slot {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* 입력창이 카드 아래에 떠 있으므로 마지막 메시지가 그 밑에 숨지 않게 비워 둔다. */
+.app[data-screen='workspace'] .chat-scroll {
+  padding-bottom: calc(var(--control-height-large) + var(--space-7));
+}
+
+/* ── 입력창: 첫 화면에서는 히어로 아래쪽 가운데, 들어가면 채팅 카드 아래 ── */
+
+.composer-dock {
+  position: absolute;
+  z-index: 4;
+  --dock-width: min(var(--composer-max-width), 100% - var(--g-left) - var(--g-right) - 2 * var(--space-5));
+  left: calc(var(--g-left) + (100% - var(--g-left) - var(--g-right) - var(--dock-width)) / 2);
+  bottom: calc(var(--g-bottom) + var(--space-5));
+  width: var(--dock-width);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.app[data-screen='workspace'] .composer-dock {
+  left: calc(var(--gap) * 2 + var(--rail-width) + var(--space-4));
+  bottom: calc(var(--gap) + var(--space-4));
+  width: calc(var(--chat-width) - 2 * var(--space-4));
+}
+
+.app[data-screen='landing'] .composer {
+  box-shadow: var(--shadow-float);
+  border-color: transparent;
+}
+
+/* 히어로 위에서는 파란 링이 바탕에 묻힌다. 흰 링으로 바꾼다. */
+.app[data-screen='landing'] .composer:has(.composer-input:focus-visible) {
+  outline-color: var(--on-feature);
+}
+
+/* 첫 화면: 예시 칩과 되돌리기 안내는 히어로 위에 있다. */
+.app[data-screen='landing'] .composer-dock .chip {
+  border-color: var(--hero-control-border);
+  background: var(--hero-control);
+  color: var(--on-feature);
+}
+
+.app[data-screen='landing'] .composer-dock .chip[data-hovered] {
+  background: var(--hero-control-hover);
+}
+
+.app[data-screen='landing'] .undo-notice,
+.app[data-screen='landing'] .undo-notice .text-button {
+  color: var(--on-feature);
+}
+
+/* ── 좁은 폭 전환 막대: 작업 화면에서만 ── */
+
+.pane-bar {
+  display: none;
+}
+
+.pane-hazards {
+  display: none;
+}
+
+.config-warnings {
+  flex-basis: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+  line-height: var(--leading-footnote);
+}
+
+.undo-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+}
+
+/* ── 공통 컨트롤 ── */
+
+.text-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-height);
+  padding: 0 var(--space-2);
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--content);
+  font: inherit;
+  font-weight: var(--weight-label);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.text-button[data-hovered] {
+  background: var(--surface-hover);
+}
+
+.tooltip {
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-small);
+  background: var(--content);
+  color: var(--surface);
+  font-size: var(--text-footnote);
+}
+
+.source-tag {
+  display: inline-flex;
+  margin-left: var(--space-2);
+  padding: 0 var(--space-2);
+  border: var(--border-width) dashed var(--control-border);
+  border-radius: var(--radius-pill);
+  color: var(--content-secondary);
+  font-size: var(--text-caption);
+  line-height: var(--leading-label);
+  font-weight: var(--weight-caption);
+  vertical-align: middle;
+}
+
+.pane-switch {
+  display: inline-flex;
+  padding: var(--space-half);
+  gap: var(--space-half);
+  border-radius: var(--radius-pill);
+  background: var(--surface-inset);
+}
+
+.pane-switch-button {
+  white-space: nowrap;
+  min-height: calc(var(--control-height) - 2 * var(--space-half));
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--content-secondary);
+  font: inherit;
+  font-weight: var(--weight-label);
+  cursor: pointer;
+}
+
+.pane-switch-button[data-selected] {
+  background: var(--surface-raised);
+  color: var(--content);
+  outline: var(--border-width) solid var(--control-border);
+}
+
+.pane-switch-button[data-focus-visible] {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+/* ── 단추 ── */
+
+.primary-button,
+.secondary-button,
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: var(--control-height);
+  border-radius: var(--radius-control);
+  font: inherit;
+  font-weight: var(--weight-label);
+  cursor: pointer;
+}
+
+/* 주 동작(보내기, 구성 확정)만 파랑을 쓴다. */
+.primary-button {
+  padding: 0 var(--space-5);
+  border: var(--border-width) solid var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* 가리킬 때 면은 그대로 두고 바깥 고리로 알린다. Hover 색(#2277FF) 위 흰 글자는 4.08이라 글자 바탕으로 쓰지 않는다. */
+.primary-button[data-hovered]:not([data-disabled]) {
+  outline: var(--stroke-selected) solid var(--accent-hover);
+  outline-offset: var(--focus-offset);
+}
+
+.secondary-button {
+  padding: 0 var(--space-4);
+  border: var(--border-width) solid var(--control-border);
+  background: var(--surface-raised);
+  color: var(--content);
+}
+
+.icon-button {
+  width: var(--control-height);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--content);
+}
+
+.secondary-button[data-hovered],
+.icon-button[data-hovered] {
+  background: var(--surface-hover);
+}
+
+.primary-button[data-disabled],
+.secondary-button[data-disabled] {
+  border-color: var(--surface-hover);
+  background: var(--surface-hover);
+  color: var(--content-disabled);
+  cursor: not-allowed;
+}
+
+.link-button {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--content);
+  font: inherit;
+  font-weight: var(--weight-label);
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.primary-button[data-focus-visible],
+.secondary-button[data-focus-visible],
+.icon-button[data-focus-visible],
+.link-button[data-focus-visible],
+.text-button[data-focus-visible],
+.chip[data-focus-visible],
+.rail-new-chat[data-focus-visible],
+.composer-button[data-focus-visible],
+.jump-button[data-focus-visible] {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+/* ── 대화상자 ── */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: var(--scrim);
+}
+
+.modal {
+  width: min(var(--dialog-max-width), 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  border-radius: var(--radius-card);
+  background: var(--surface-raised);
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  outline: none;
+}
+
+.dialog-title {
+  margin: 0;
+  color: var(--heading);
+  font-size: var(--text-title2);
+  line-height: var(--leading-title2);
+  font-weight: var(--weight-title2);
+}
+
+.dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  font-weight: var(--weight-label);
+  cursor: pointer;
+}
+
+.checkbox-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  border: var(--stroke-selected) solid var(--control-border);
+  border-radius: var(--radius-small);
+  color: transparent;
+}
+
+.checkbox[data-selected] .checkbox-box {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.checkbox[data-focus-visible] .checkbox-box {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+/* ── 좁은 폭(48rem 아래): 레일은 위쪽 막대, 대화와 작업 영역을 오간다 ── */
+
+/* 48rem은 tokens.css의 좁은 폭 기준과 같은 값이다. 컨테이너 쿼리 조건에는 커스텀 속성을 쓸 수 없다. */
+@container app (max-width: 48rem) {
+  .app {
+    --gap: 0.625rem;
+    --g-top: calc(var(--gap) * 2 + var(--rail-height-narrow));
+    --g-left: var(--gap);
+    --g-head: 7.5rem;
+    --g-foot: 13rem;
+  }
+
+  .app[data-screen='workspace'] {
+    --g-top: calc(var(--gap) * 3 + var(--rail-height-narrow) + var(--pane-bar-height));
+    --g-left: var(--gap);
+    --g-right: var(--gap);
+    --g-head: 4.5rem;
+    /* 구성 확정 띠 */
+    --g-bottom: calc(var(--gap) * 2 + var(--confirm-strip-height));
+  }
+
+  .rail {
+    bottom: auto;
+    right: var(--gap);
+    width: auto;
+    height: var(--rail-height-narrow);
+    flex-direction: row;
+    padding: 0 var(--space-2);
+  }
+
+  .rail-tabs {
+    flex-direction: row;
+    margin: 0 0 0 var(--space-2);
+    gap: 0;
+  }
+
+  .rail-tab {
+    width: auto;
+  }
+
+  /* 좁은 폭에서는 아이콘만. 지금 단계만 이름을 옆에 보인다. 나머지 이름은 스크린 리더에 남는다. */
+  .rail-tab[data-selected] {
+    flex-direction: row;
+    gap: var(--space-2);
+    padding-right: var(--space-3);
+  }
+
+  .rail-tab:not([data-selected]) .rail-tab-label {
+    position: absolute;
+    width: var(--border-width);
+    height: var(--border-width);
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .rail-new-chat {
+    margin: 0 0 0 auto;
+  }
+
+  .pane-bar {
+    position: absolute;
+    z-index: 3;
+    top: calc(var(--gap) * 2 + var(--rail-height-narrow));
+    left: var(--gap);
+    right: var(--gap);
+    height: var(--pane-bar-height);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .app[data-screen='landing'] .pane-bar {
+    display: none;
+  }
+
+  .pane-hazards {
+    display: flex;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  /* 실행 중 대화 쪽: 막대를 두 줄로. 윗줄은 '대화 | 작업 영역'과 비상 정지, 아랫줄은 위험 칩 전부.
+     한 줄에 넣으면 위험 칩이 잘린다. 위험은 어느 쪽에서든 다 읽혀야 한다. */
+  .app[data-screen='workspace'][data-run='active'][data-pane='chat'] {
+    --pane-bar-height: calc(var(--control-height-large) + var(--control-height) + var(--space-2));
+  }
+
+  .app[data-run='active'][data-pane='chat'] .pane-bar {
+    flex-wrap: wrap;
+    align-content: center;
+    row-gap: var(--space-2);
+  }
+
+  .app[data-run='active'][data-pane='chat'] .pane-hazards {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .app[data-pane='chat'] .pane-estop {
+    display: flex;
+    flex: none;
+    margin-left: auto;
+  }
+
+  .pane-estop .danger-button {
+    white-space: nowrap;
+  }
+
+  .pane-estop .estop-sub {
+    display: none;
+  }
+
+  /* 작업 영역 쪽에서는 아래 확정 띠가 같은 요약을 보여 준다. 두 번 보이지 않게. */
+  .app[data-pane='work'] .pane-hazards {
+    display: none;
+  }
+
+  .pane-hazards .hazard-summary-title {
+    display: none;
+  }
+
+  .chat-card,
+  .app[data-screen='workspace'] .chat-card {
+    top: var(--g-top);
+    left: var(--gap);
+    right: var(--gap);
+    width: auto;
+  }
+
+  .app[data-screen='workspace'][data-pane='work'] .chat-card {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .app[data-screen='workspace'][data-pane='work'] .composer-dock {
+    display: none;
+  }
+
+  .app[data-screen='workspace'] .composer-dock {
+    left: calc(var(--gap) + var(--space-3));
+    width: calc(100% - 2 * var(--gap) - 2 * var(--space-3));
+    bottom: calc(var(--gap) + var(--space-3));
+  }
+
+  .chat-header {
+    padding: var(--space-4) var(--space-4) 0;
+  }
+}
+
+/* ── 인쇄: 대화와 입력창은 빼고 작업 영역만 ── */
+
+@media print {
+  .chat-card,
+  .composer-dock,
+  .rail,
+  .pane-bar,
+  .side {
+    display: none !important;
+  }
+
+  .app,
+  .app[data-screen='workspace'] {
+    height: auto;
+    overflow: visible;
+  }
+}

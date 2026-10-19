@@ -1,0 +1,16 @@
+# Blender
+*.blend1
+*.blend2
+
+# Python
+__pycache__/
+*.pyc
+
+# ROS 2 / colcon
+build/
+install/
+log/
+
+# OS
+Thumbs.db
+.DS_Store

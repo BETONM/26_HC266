@@ -1,0 +1,25 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Dependencies and generated files
+node_modules/
+dist/
+build/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.dart_tool/
+.flutter-plugins*
+*.tsbuildinfo
+.DS_Store
+
+# Local experiment artifacts
+*.pt
+*.pth
+*.ckpt

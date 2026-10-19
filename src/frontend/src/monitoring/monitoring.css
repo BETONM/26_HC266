@@ -1,0 +1,1263 @@
+/*
+ * 모니터링: 관제 화면. 요약 열을 접고 그 자리까지 넓힌 가운데 카드 한 장에 모두 둔다.
+ *   머리(상태·경과·비상 정지) / 지금 하는 동작 + 장치 / 센서 2×2 | 카메라 셋 / 계획 진행 · 위험 · 장비 로그
+ * 카드가 충분히 넓고 높으면 카드 높이에 맞춰 스크롤 없이 놓는다. 남는 높이는 카메라와 아래 칸이 나눠 갖는다.
+ * 작으면 한 줄로 흐르고 머리(비상 정지)는 위에 붙어 남는다. 강조색은 진행 막대와 '하는 중' 표시에만 쓴다.
+ */
+
+/* 모니터링을 보는 동안 요약 열은 접는다. 위험·실행·장치 상태는 이 카드 안에 있다. */
+.app[data-screen='workspace'][data-stage='monitoring'] .side {
+  display: none;
+}
+
+/* 바깥 카드는 지운다. 칸 하나하나가 회색 바탕 위의 흰 카드다(다른 단계의 카드와 같은 면). */
+.app[data-screen='workspace'][data-stage='monitoring'] .stage-card {
+  --g-right: var(--gap);
+  --g-bottom: var(--gap);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* 높이까지 재는 컨테이너. 카드 자리가 정해져 있어서(절대 위치) 크기 봉쇄를 걸 수 있다. 넘치면 여기서 스크롤한다. */
+.monitor {
+  container: monitor / size;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.mon-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+}
+
+/* 한 줄로 흐를 때 머리는 위에 붙는다. 어디까지 내려가도 비상 정지에 닿는다. */
+.mon-head {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-5);
+  padding: var(--space-2) var(--space-2) var(--space-3);
+  border-bottom: var(--border-width) solid var(--separator);
+  background: var(--surface);
+}
+
+.mon-head .monitor-controls {
+  margin-top: 0;
+}
+
+.mon-head-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.mon-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-3);
+  margin: 0;
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+  line-height: var(--leading-footnote);
+}
+
+.mon-clock {
+  color: var(--content);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-label);
+  font-variant-numeric: tabular-nums;
+}
+
+.mon-title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--heading);
+  font-size: var(--text-footnote);
+  line-height: var(--leading-footnote);
+  font-weight: var(--weight-title3);
+}
+
+.mon-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.mon-section-head .text-button {
+  font-size: var(--text-footnote);
+}
+
+.monitor-count {
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+  font-weight: normal;
+}
+
+/* 아래 칸(계획 진행·장비 로그)의 카드. 위험은 어두운 면, 카메라는 영상 바탕이다. */
+.mon-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 0;
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width) solid var(--separator);
+  border-radius: var(--radius-panel);
+  background: var(--surface-raised);
+}
+
+/* ── 지금 + 장치 ── */
+
+.mon-now {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width) solid var(--separator);
+  border-radius: var(--radius-panel);
+  background: var(--surface-raised);
+}
+
+.monitor-now {
+  display: flex;
+  flex: 1 1 20rem;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.monitor-now p {
+  margin: 0;
+}
+
+.monitor-now-label {
+  margin: 0;
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+  line-height: var(--leading-footnote);
+  font-weight: var(--weight-label);
+}
+
+.monitor-now-step {
+  color: var(--heading);
+  font-size: var(--text-title3);
+  line-height: var(--leading-title3);
+  font-weight: var(--weight-title3);
+}
+
+.monitor-now-group {
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+  font-weight: normal;
+}
+
+.mon-progress-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-1);
+}
+
+.mon-progress-row .monitor-progress {
+  flex: 1;
+}
+
+.mon-progress-count {
+  color: var(--content-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-footnote);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* 장치는 '지금' 띠 오른쪽에 두 줄 칸으로. 넓으면 세로 구분선으로 가른다. */
+.mon-devices {
+  display: flex;
+  flex: 1 1 var(--monitor-devices-width);
+  flex-direction: column;
+  gap: var(--space-1);
+  max-width: var(--monitor-devices-width);
+}
+
+.device-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-1) var(--space-4);
+  font-size: var(--text-footnote);
+  line-height: var(--leading-footnote);
+}
+
+.device-list li {
+  display: grid;
+  grid-template-columns: var(--status-dot) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.device-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── 카메라 셋 ── */
+
+.mon-cams {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.camera-tile {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+}
+
+.camera-tile[data-camera='top'] {
+  grid-column: 1 / -1;
+}
+
+.camera-frame {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /* 다크에서는 영상 바탕과 화면 바탕이 같은 남색이라, 다른 카드처럼 테두리로 가장자리를 남긴다. */
+  border: var(--border-width) solid var(--separator);
+  border-radius: var(--radius-panel);
+  background: var(--video-backdrop);
+  cursor: zoom-in;
+}
+
+.camera-frame[data-focus-visible] {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.camera-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: var(--video-backdrop);
+}
+
+.camera-video-large {
+  border-radius: var(--radius-panel);
+  aspect-ratio: 16 / 9;
+}
+
+.camera-placeholder {
+  display: grid;
+  place-items: center;
+  padding: var(--space-4) var(--space-4) var(--space-7);
+  color: var(--on-video);
+  font-size: var(--text-footnote);
+  text-align: center;
+  cursor: default;
+}
+
+/* 영상 위 이름표. 어두운 영상 바탕과 같은 면이라 영상이 밝아도 읽힌다. 영상 속 MOCK 표시와 겹치지 않게 아래 왼쪽. */
+.camera-tag {
+  position: absolute;
+  left: var(--space-2);
+  bottom: var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--video-backdrop);
+  color: var(--on-video);
+  font-size: var(--text-caption);
+  line-height: var(--leading-label);
+  font-weight: var(--weight-label);
+  pointer-events: none;
+}
+
+/* 실시간은 칠한 점, 끊김은 빈 점. 글자가 늘 함께 있다. */
+.camera-tag-dot {
+  width: var(--status-dot);
+  height: var(--status-dot);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 var(--stroke-pick) currentColor;
+}
+
+.camera-tile[data-live] .camera-tag-dot {
+  background: currentColor;
+}
+
+/* ── 센서 넷 ── */
+
+.mon-sensors {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.spark {
+  width: 100%;
+  height: var(--spark-height);
+  overflow: visible;
+}
+
+.spark-line {
+  fill: none;
+  stroke: var(--content);
+  stroke-width: var(--stroke-selected);
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.mon-table-wrap {
+  max-height: var(--monitor-table-max-height);
+  overflow-y: auto;
+}
+
+/* ── 계획 진행 ── */
+
+.progress-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.progress-group-name,
+.progress-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 묶음별 진행: 묶음마다 한 칸(이름 / 마친 수). 지금 묶음은 굵게. */
+.progress-groups {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  margin: 0;
+  list-style: none;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding: var(--space-2) 0 0;
+  border-top: var(--border-width) solid var(--separator);
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+}
+
+.progress-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.progress-group .monitor-count {
+  font-family: var(--font-mono);
+}
+
+.progress-group[data-current] {
+  color: var(--content);
+  font-weight: var(--weight-label);
+}
+
+/* ── 위험 ── */
+
+.mon-hazards.hz-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-panel);
+}
+
+.mon-hazards .hz-card-link {
+  margin: 0;
+}
+
+.mon-hazard-count {
+  font-weight: normal;
+}
+
+.mon-hazard-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  font-size: var(--text-footnote);
+  line-height: var(--leading-footnote);
+}
+
+.mon-hazard-list li {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.mon-hazard-list .severity-glyph {
+  align-self: center;
+}
+
+.mon-hazard-severity {
+  font-weight: var(--weight-title3);
+  white-space: nowrap;
+}
+
+/* 가장 무거운 위험은 제목도 굵게. 모양·글자가 이미 말하고, 무게는 거기에 더한다. */
+.mon-hazard-list li[data-severity='critical'] .mon-hazard-name {
+  font-weight: var(--weight-label);
+}
+
+/* ── 장비 로그 ── */
+
+.device-log {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  border-top: var(--border-width) solid var(--separator);
+  font-size: var(--text-footnote);
+  line-height: var(--leading-footnote);
+}
+
+.device-log:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.device-log li {
+  display: grid;
+  grid-template-columns: var(--log-time-width) minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-1) 0;
+  border-bottom: var(--border-width) solid var(--separator);
+}
+
+/* ── 넓을 때: 장치는 '지금' 아래 한 줄로, 한 줄 흐름에서는 센서 네 칸 ── */
+
+@container monitor (min-width: 34rem) {
+  .sensor-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .mon-devices {
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .device-list {
+    grid-template-columns: repeat(auto-fill, minmax(var(--monitor-device-min), 1fr));
+  }
+}
+
+/* ── 더 넓을 때: 장치는 '지금' 오른쪽 칸 ── */
+
+@container monitor (min-width: 50rem) {
+  .mon-devices {
+    flex-basis: var(--monitor-devices-width);
+    max-width: var(--monitor-devices-width);
+    padding-left: var(--space-5);
+    border-left: var(--border-width) solid var(--separator);
+  }
+
+  .device-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ── 넓고 높을 때: 관제 화면. 카드 높이에 맞춰 스크롤 없이 ──
+   가운데 줄은 왼쪽 센서 2×2, 오른쪽 카메라(탑뷰 위, 왼팔·오른팔 아래). 12칸 격자라 아래 세 칸은 4칸씩. */
+
+@container monitor (min-width: 34rem) and (min-height: 40rem) {
+  .mon-grid {
+    display: grid;
+    height: 100%;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto auto minmax(0, 1.6fr) minmax(0, 1fr);
+    grid-template-areas:
+      'head head head head head head head head head head head head'
+      'now now now now now now now now now now now now'
+      'sensors sensors sensors sensors sensors cams cams cams cams cams cams cams'
+      'plan plan plan plan hazards hazards hazards hazards log log log log';
+    gap: var(--space-3);
+    padding: 0;
+  }
+
+  /* 단추가 다음 줄로 내려가지 않게 글 쪽이 줄어든다(메타가 두 줄이 된다). */
+  .mon-head {
+    grid-area: head;
+    position: static;
+    flex-wrap: nowrap;
+    padding: var(--space-1) var(--space-2) 0;
+    border-bottom: 0;
+  }
+
+  .mon-head-text {
+    flex: 1 1 0;
+  }
+
+  .mon-head .monitor-controls {
+    flex: none;
+  }
+
+  /* 칸 머리의 글 단추는 낮게. 데스크톱 최소 크기(20pt)는 넘는다. */
+  .mon-section-head .text-button,
+  .mon-section-head .hz-card-link {
+    min-height: var(--control-height-compact);
+  }
+
+  .mon-panel .progress-step {
+    padding: 0;
+  }
+
+  .mon-panel .progress-groups {
+    padding-top: var(--space-1);
+  }
+
+  .mon-now {
+    grid-area: now;
+  }
+
+  /* 탑뷰는 위 한 줄 전체, 팔 카메라 둘은 아래에 나란히. 팔 카메라는 폭이 반이라 높이도 반이면 같은 비율이 된다. */
+  .mon-cams {
+    grid-area: cams;
+    grid-template-rows: minmax(0, 2fr) minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  /* 칸 높이에 맞춘다. 영상은 비율을 지키고 남는 자리는 어두운 바탕으로 둔다. */
+  .mon-cams .camera-frame {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .mon-sensors {
+    grid-area: sensors;
+    min-height: 0;
+  }
+
+  .mon-sensors .sensor-grid {
+    flex: 1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    min-height: 0;
+  }
+
+  .mon-plan {
+    grid-area: plan;
+  }
+
+  .mon-hazards {
+    grid-area: hazards;
+  }
+
+  .mon-log {
+    grid-area: log;
+  }
+
+  /* 센서 칸: 이름 / 값 / 흐름(남는 높이를 채운다) / 출처. */
+  .mon-sensors .sensor-tile {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'label open'
+      'value value'
+      'spark spark'
+      'caption caption';
+    align-items: center;
+    column-gap: var(--space-3);
+    row-gap: var(--space-1);
+    min-height: 0;
+    overflow: hidden;
+    padding: var(--space-3);
+  }
+
+  .mon-sensors .sensor-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mon-sensors .sensor-label {
+    grid-area: label;
+  }
+
+  .mon-sensors .sensor-value {
+    grid-area: value;
+  }
+
+  .mon-sensors .spark {
+    grid-area: spark;
+    align-self: stretch;
+    height: 100%;
+    min-height: 0;
+    max-height: calc(var(--spark-height) * 3);
+    overflow: hidden;
+  }
+
+  .mon-sensors .sensor-caption {
+    grid-area: caption;
+  }
+
+  .mon-sensors .sensor-open {
+    grid-area: open;
+    justify-self: end;
+  }
+}
+
+.monitor-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* 실행 상태: 점 모양 + 글자. 진행 중만 파랑, 비상 정지는 위험 빨강. */
+.run-state {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  border: var(--border-width) solid var(--control-border);
+  border-radius: var(--radius-pill);
+  color: var(--content);
+  font-size: var(--text-footnote);
+  line-height: var(--leading-title3);
+  font-weight: var(--weight-label);
+}
+
+.run-state-dot {
+  width: var(--status-dot);
+  height: var(--status-dot);
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.run-state[data-state='running'] {
+  border-color: var(--accent-strong);
+  color: var(--accent-strong);
+}
+
+/* 진행 중은 파랑 칠한 점, 일시정지는 속이 빈 점, 완료는 본문색 칠한 점, 비상 정지는 빨간 면. 글자가 늘 함께 있다. */
+.run-state[data-state='paused'] .run-state-dot {
+  background: transparent;
+  box-shadow: inset 0 0 0 var(--stroke-pick) currentColor;
+}
+
+.run-state[data-state='stopped'] {
+  border-color: var(--signal-critical-fill);
+  background: var(--signal-critical-fill);
+  color: var(--on-signal-critical);
+}
+
+.monitor-now p {
+  margin: 0;
+}
+
+.monitor-now-label {
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+}
+
+.monitor-now-step {
+  color: var(--heading);
+  font-size: var(--text-title3);
+  line-height: var(--leading-title3);
+  font-weight: var(--weight-title3);
+}
+
+.monitor-now-group {
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+  font-weight: normal;
+}
+
+/* 트랙은 테두리로 끝을 보이고(--surface-inset 위 6.95 / 7.94), 채움은 --accent-strong(다크 트랙 대비 5.76). */
+.monitor-progress {
+  height: var(--progress-height);
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--separator);
+  box-shadow: inset 0 0 0 var(--border-width) var(--content-secondary);
+}
+
+.monitor-progress > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent-strong);
+  transition: width var(--motion-fade) var(--ease-enter);
+}
+
+/* 일시정지와 비상 정지 사이를 넓게 둔다. 잘못 누르면 되돌릴 수 없는 쪽이 비상 정지다. */
+.monitor-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-5);
+  margin-top: var(--space-3);
+}
+
+.estop {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);
+}
+
+/* 비상 정지: 이 화면에서 가장 무거운 단추. 위험 빨강 면 + 흰 글자(6.57).
+   빨강은 위험(Hazard)에만 쓰지만, 비상 정지는 산업 관례(빨간 비상 정지)라 예외로 둔다(README '디자인 토큰'). */
+.danger-button {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--control-height-large);
+  padding: var(--space-2) var(--space-6);
+  border: var(--border-width) solid var(--signal-critical-fill);
+  border-radius: var(--radius-control);
+  background: var(--signal-critical-fill);
+  color: var(--on-signal-critical);
+  font: inherit;
+  font-weight: var(--weight-title3);
+  cursor: pointer;
+}
+
+.estop-sub {
+  font-size: var(--text-caption);
+  letter-spacing: var(--tracking-control);
+}
+
+.estop[data-compact] .danger-button {
+  min-height: var(--control-height);
+  padding: var(--space-1) var(--space-4);
+}
+
+/* 비상 정지 실패: 로봇이 아직 움직일 수 있다는 말이라 빨간 테두리 상자로 단추 바로 아래에. */
+.estop-error {
+  max-width: var(--dialog-max-width);
+  padding: var(--space-2) var(--space-3);
+  border: var(--stroke-selected) solid var(--signal-critical-fill);
+  border-radius: var(--radius-panel);
+  background: var(--surface-raised);
+  color: var(--content);
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-label);
+  line-height: var(--leading-footnote);
+}
+
+.monitor-command-error {
+  flex-basis: 100%;
+}
+
+.monitor-stale {
+  color: var(--content);
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-label);
+}
+
+.danger-button[data-hovered] {
+  outline: var(--stroke-selected) solid var(--signal-critical-fill);
+  outline-offset: var(--focus-offset);
+}
+
+.danger-button[data-focus-visible] {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.monitor-controls .secondary-button {
+  min-height: var(--control-height-large);
+}
+
+.monitor-note {
+  margin: 0;
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+  line-height: var(--leading-footnote);
+}
+
+.monitor-count {
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+  font-weight: normal;
+}
+
+/* ── 센서 ── */
+
+.sensor-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  min-width: 0;
+  padding: var(--space-4);
+  border: var(--border-width) solid var(--separator);
+  border-radius: var(--radius-panel);
+  background: var(--surface-raised);
+  color: var(--content);
+  font: inherit;
+  text-align: left;
+}
+
+.sensor-tile p {
+  margin: 0;
+}
+
+.sensor-label {
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-label);
+}
+
+.sensor-unit {
+  font-weight: normal;
+}
+
+.sensor-value {
+  color: var(--heading);
+  font-size: var(--text-title1);
+  line-height: var(--leading-title1);
+  font-weight: var(--weight-title1);
+  font-variant-numeric: tabular-nums;
+}
+
+.sensor-caption,
+.sensor-open {
+  color: var(--content-secondary);
+  font-size: var(--text-caption);
+  line-height: var(--leading-caption);
+}
+
+/* 오래된 값은 흐리게 두고 글자로도 알린다. */
+.sensor-tile[data-stale] .sensor-value {
+  color: var(--content-secondary);
+}
+
+.sensor-tile[data-stale] .sensor-caption {
+  color: var(--content);
+  font-weight: var(--weight-label);
+}
+
+.sensor-tile-button {
+  cursor: pointer;
+}
+
+.sensor-tile-button[data-hovered] {
+  background: var(--surface-hover);
+}
+
+.sensor-tile-button[data-focus-visible] {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.sensor-open {
+  margin-top: auto;
+  color: var(--accent-strong);
+  font-weight: var(--weight-label);
+}
+
+/* 대화상자 안의 소제목(열화상 추적 영역). */
+.monitor-section-title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--heading);
+  font-size: var(--text-title3);
+  line-height: var(--leading-title3);
+  font-weight: var(--weight-title3);
+}
+
+/* ── 센서 기록 표(대화상자) ── */
+
+.trend-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-footnote);
+  font-variant-numeric: tabular-nums;
+}
+
+.trend-table th,
+.trend-table td {
+  padding: var(--space-1) var(--space-2);
+  border-bottom: var(--border-width) solid var(--separator);
+  text-align: right;
+}
+
+.trend-table th:first-child,
+.trend-table td:first-child {
+  text-align: left;
+}
+
+/* ── 목록 초기화 ── */
+
+.progress-steps,
+.device-log,
+.device-list,
+.roi-list ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.progress-step {
+  display: grid;
+  grid-template-columns: var(--status-dot) var(--plan-number-width) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-1) 0;
+  color: var(--content-secondary);
+}
+
+/* 마침: 칠한 점, 하는 중: 파랑 고리 + 굵은 글자, 대기: 빈 점. */
+.progress-mark {
+  width: var(--status-dot);
+  height: var(--status-dot);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 var(--stroke-pick) var(--control-border);
+}
+
+.progress-step[data-state='done'] .progress-mark {
+  background: var(--content-secondary);
+  box-shadow: none;
+}
+
+.progress-step[data-state='active'] {
+  color: var(--content);
+  font-weight: var(--weight-label);
+}
+
+.progress-step[data-state='active'] .progress-mark {
+  background: var(--accent-strong);
+  box-shadow:
+    0 0 0 var(--stroke-pick) var(--surface-raised),
+    0 0 0 calc(var(--stroke-pick) * 2) var(--accent-strong);
+}
+
+.progress-all {
+  padding-top: var(--space-2);
+}
+
+/* ── 장비 로그 ── */
+
+.device-log time {
+  color: var(--content-secondary);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.device-log li:is([data-kind='error'], [data-kind='device'], [data-kind='estop']) span {
+  font-weight: var(--weight-label);
+}
+
+/* ── 장치 상태 ── */
+
+.device-label {
+  color: var(--content-secondary);
+}
+
+/* 정상: 칠한 점, 대기: 반만, 오류: X, 확인 중: 빈 점. 모양과 글자가 상태를 말하고 색은 본문색 하나다
+   (파랑은 '진행 중', 빨강은 위험과 비상 정지에 남겨 둔다). */
+.device-mark {
+  width: var(--status-dot);
+  height: var(--status-dot);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 var(--stroke-pick) var(--control-border);
+}
+
+.device-list li[data-state='online'] .device-mark {
+  background: var(--content);
+  box-shadow: none;
+}
+
+.device-list li[data-state='pending'] .device-mark {
+  background: linear-gradient(90deg, var(--content-secondary) 50%, transparent 50%);
+  box-shadow: inset 0 0 0 var(--stroke-pick) var(--content-secondary);
+}
+
+.device-list li[data-state='offline'] .device-mark {
+  border-radius: 0;
+  background: var(--content);
+  box-shadow: none;
+  clip-path: polygon(
+    20% 0,
+    50% 30%,
+    80% 0,
+    100% 20%,
+    70% 50%,
+    100% 80%,
+    80% 100%,
+    50% 70%,
+    20% 100%,
+    0 80%,
+    30% 50%,
+    0 20%
+  );
+}
+
+.device-list li[data-state='offline'] .device-label {
+  color: var(--content);
+  font-weight: var(--weight-label);
+}
+
+.side-run-state {
+  color: var(--content);
+}
+
+/* ── 큰 대화상자(열화상, 카메라 확대) ── */
+
+.modal.modal-wide {
+  width: min(var(--modal-wide-width), 100%);
+}
+
+.dialog-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/* 대화상자 머리: 비상 정지와 '닫기' 사이를 본 화면의 일시정지와 같이 넓게. */
+.dialog-head-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: var(--space-5);
+}
+
+.estop-stopped {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--content);
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-label);
+}
+
+.monitor-now-label:focus {
+  outline: none;
+}
+
+.monitor-now-label:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--radius-small);
+}
+
+.thermal-add {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* 좁은 폭의 대화 쪽에서만 보이는 비상 정지. */
+.pane-estop {
+  display: none;
+}
+
+.dialog-subtitle {
+  margin: var(--space-1) 0 0;
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+}
+
+.thermal-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+@media (min-width: 56rem) {
+  .thermal-body {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  }
+}
+
+.thermal-feed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.thermal-frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-panel);
+  background: var(--video-backdrop);
+  cursor: crosshair;
+  touch-action: none;
+  user-select: none;
+}
+
+.thermal-frame[data-unavailable] {
+  cursor: default;
+}
+
+.thermal-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.thermal-placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  justify-content: center;
+  height: 100%;
+  margin: 0;
+  padding: var(--space-5);
+  color: var(--on-video);
+  font-size: var(--text-footnote);
+  text-align: center;
+}
+
+.thermal-draft {
+  position: absolute;
+  border: var(--stroke-selected) dashed var(--on-video);
+  pointer-events: none;
+}
+
+.thermal-hint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+}
+
+.thermal-hint p {
+  flex: 1 1 var(--message-error-text-min);
+  margin: 0;
+}
+
+.thermal-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.thermal-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.thermal-stats div {
+  padding: var(--space-3);
+  border-radius: var(--radius-panel);
+  background: var(--surface-inset);
+}
+
+.thermal-stats dt {
+  color: var(--content-secondary);
+  font-size: var(--text-caption);
+}
+
+.thermal-stats dd {
+  margin: 0;
+  font-weight: var(--weight-label);
+  font-variant-numeric: tabular-nums;
+}
+
+.roi-list ol {
+  display: flex;
+  flex-direction: column;
+  border-top: var(--border-width) solid var(--separator);
+}
+
+.roi-row {
+  display: grid;
+  grid-template-columns: var(--status-dot) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: var(--border-width) solid var(--separator);
+  font-size: var(--text-footnote);
+}
+
+/* 서버가 영상 위 사각형에 쓰는 색과 같은 점. 흰색·노랑은 밝은 바탕에서 안 보여 테두리를 두른다. */
+.roi-dot {
+  width: var(--status-dot);
+  height: var(--status-dot);
+  border-radius: 50%;
+  box-shadow: 0 0 0 var(--border-width) var(--control-border);
+}
+
+.roi-identity,
+.roi-values {
+  display: flex;
+  flex-direction: column;
+}
+
+.roi-identity small,
+.roi-values small {
+  color: var(--content-secondary);
+  font-size: var(--text-caption);
+}
+
+.roi-values {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.roi-actions {
+  grid-column: 2 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .monitor-progress > span {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .run-state-dot,
+  .progress-mark,
+  .device-mark,
+  .monitor-progress > span {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+}

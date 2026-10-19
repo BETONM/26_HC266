@@ -1,0 +1,279 @@
+/* 채팅. 조용하게 둔다. 강조는 그래프와 위험에만 쓴다. */
+
+.chat-log {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.chat-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-3) var(--space-5) var(--space-5);
+  overscroll-behavior: contain;
+}
+
+.chat-empty {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  color: var(--content-secondary);
+}
+
+.chat-empty p {
+  margin: 0;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.message p {
+  margin: 0;
+}
+
+.message[data-role='user'] {
+  align-self: flex-end;
+  max-width: 85%;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-panel);
+  background: var(--highlight);
+  white-space: pre-wrap;
+}
+
+/* 화면에서 한 일(구성 확정, 실행 시작). 말풍선이 아니라 대화 사이의 구분선이다. */
+.message[data-role='event'] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+  line-height: var(--leading-footnote);
+  text-align: center;
+}
+
+.message[data-role='event']::before,
+.message[data-role='event']::after {
+  content: '';
+  flex: 1;
+  border-top: var(--border-width) solid var(--separator);
+}
+
+.message[data-role='assistant'] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.message-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.message-text ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding-left: var(--space-5);
+}
+
+.message-line {
+  display: block;
+}
+
+.message-pending,
+.message-meta {
+  color: var(--content-secondary);
+  font-size: var(--text-footnote);
+  line-height: var(--leading-footnote);
+}
+
+.message-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* 시스템 오류는 위험이 아니다. 신호색 대신 본문색 + 아이콘 + 문장으로 알린다. */
+.message-error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--control-border);
+  border-radius: var(--radius-panel);
+  color: var(--content);
+}
+
+.message-error p {
+  flex: 1 1 var(--message-error-text-min);
+}
+
+.message-error-icon {
+  flex: none;
+  margin-top: var(--space-1);
+}
+
+.jump-button {
+  position: absolute;
+  bottom: var(--space-3);
+  left: 50%;
+  translate: -50% 0;
+  min-height: var(--control-height);
+  padding: 0 var(--space-4);
+  border: var(--border-width) solid var(--control-border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  color: var(--content);
+  font: inherit;
+  font-weight: var(--weight-label);
+  cursor: pointer;
+}
+
+/* ── 입력창 ── */
+
+.composer {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-4);
+  border: var(--border-width) solid var(--control-border);
+  border-radius: var(--radius-card);
+  background: var(--surface-raised);
+}
+
+.composer:focus-within {
+  border-color: var(--accent);
+}
+
+/* 테두리색만 바뀌면 강제 색상 모드에서 포커스가 사라진다. 다른 컨트롤과 같은 outline 링을 둔다. */
+.composer:has(.composer-input:focus-visible) {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.composer-input {
+  flex: 1;
+  min-width: 0;
+  max-height: var(--composer-max-height);
+  padding: var(--space-2);
+  border: 0;
+  background: transparent;
+  color: var(--content);
+  line-height: var(--leading-body);
+  resize: none;
+}
+
+.composer-input::placeholder {
+  color: var(--placeholder);
+  opacity: 1;
+}
+
+/* 입력란 자체에는 링을 두지 않는다. 감싼 .composer의 outline 링(:has(:focus-visible))이 포커스를 보여 준다. */
+.composer-input:focus-visible {
+  outline: none;
+}
+
+.composer-button {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: calc(var(--control-height-large) - var(--space-2));
+  padding: 0 var(--space-4);
+  border: var(--border-width) solid transparent;
+  border-radius: var(--radius-control);
+  font: inherit;
+  font-weight: var(--weight-label);
+  cursor: pointer;
+}
+
+/* 보내기는 이 화면의 주 동작이라 파랑을 쓴다. */
+.composer-button[data-variant='send'] {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.composer-button[data-variant='send'][data-hovered]:not([data-disabled]) {
+  outline: var(--stroke-selected) solid var(--accent-hover);
+  outline-offset: var(--focus-offset);
+}
+
+.composer-input::placeholder {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 채팅 카드가 좁아지면(64rem 아래) 단추는 아이콘만 남겨 입력란에 자리를 준다. 이름은 스크린 리더에 남는다. */
+@container app (max-width: 64rem) {
+  .app[data-screen='workspace'] .composer-button span {
+    position: absolute;
+    width: var(--border-width);
+    height: var(--border-width);
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .app[data-screen='workspace'] .composer-button {
+    padding: 0 var(--space-3);
+  }
+}
+
+.composer-button[data-variant='send'][data-disabled] {
+  background: var(--surface-hover);
+  color: var(--content-disabled);
+  cursor: not-allowed;
+}
+
+.composer-button[data-variant='stop'] {
+  background: var(--surface-raised);
+  color: var(--content);
+  border-color: var(--control-border);
+}
+
+.composer-button[data-variant='stop'][data-hovered] {
+  background: var(--surface-hover);
+}
+
+/* ── 예시 질문 ── */
+
+.example-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.app[data-screen='landing'] .example-chips {
+  justify-content: center;
+}
+
+.chip {
+  min-height: var(--control-height);
+  padding: 0 var(--space-3);
+  border: var(--border-width) solid var(--control-border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  color: var(--content);
+  font: inherit;
+  font-size: var(--text-footnote);
+  cursor: pointer;
+  text-align: left;
+}
+
+.chip[data-hovered] {
+  background: var(--surface-hover);
+}

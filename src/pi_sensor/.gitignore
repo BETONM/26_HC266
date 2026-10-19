@@ -1,0 +1,30 @@
+.DS_Store
+
+__pycache__/
+*.py[cod]
+
+.venv/
+venv/
+
+# API_KEY 등. systemd 유닛이 EnvironmentFile 로 읽는다
+.env
+
+# read_sensors.py --csv 로 남기는 측정 로그
+*.csv
+
+# 카메라 테스트 결과물
+*.jpg
+*.png
+
+# 레일 보정값 (실측 스트로크 + 마지막 위치). 장비마다 다르므로 커밋하지 않는다
+rail/calibration.json
+rail/stations.json
+
+# 중앙 서버 로컬 데이터 (센서 이력, 명령 기록)
+data/
+
+# 파이 uplink 의 명령 진행 단계
+rail/uplink_command.json
+
+# start_server.bat 가 남기는 서버 로그
+logs/

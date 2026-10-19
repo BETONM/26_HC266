@@ -1,0 +1,108 @@
+/* 위험 심각도 표시. 무게 사다리: critical 칠한 면 > high 틴트+2px > medium 틴트+1.5px > low 테두리만. */
+
+.severity-glyph {
+  width: 1em;
+  height: 1em;
+  flex: none;
+}
+
+.hazard-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-footnote);
+  line-height: var(--leading-label);
+  font-weight: var(--weight-label);
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.hazard-badge[data-severity='critical'] {
+  background: var(--signal-critical-fill);
+  color: var(--on-signal-critical);
+  border: var(--stroke-hazard-high) solid var(--signal-critical-fill);
+}
+
+.hazard-badge[data-severity='high'] {
+  background: var(--signal-high-tint);
+  color: var(--signal-high);
+  border: var(--stroke-hazard-high) solid var(--signal-high);
+}
+
+.hazard-badge[data-severity='medium'] {
+  background: var(--signal-medium-tint);
+  color: var(--signal-medium);
+  border: var(--stroke-hazard-medium) solid var(--signal-medium);
+}
+
+.hazard-badge[data-severity='low'] {
+  background: transparent;
+  color: var(--content);
+  border: var(--stroke-hazard-low) solid var(--control-border);
+}
+
+.hazard-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.hazard-summary-title {
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-label);
+  color: var(--content-secondary);
+}
+
+.hazard-summary-list {
+  display: contents;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hazard-summary-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-footnote);
+  line-height: var(--leading-label);
+  font-weight: var(--weight-label);
+  white-space: nowrap;
+}
+
+.hazard-summary-count {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 요약 띠의 칩도 배지와 같은 무게 사다리를 쓴다. */
+.hazard-summary-item[data-severity='critical'] {
+  background: var(--signal-critical-fill);
+  color: var(--on-signal-critical);
+  border: var(--stroke-hazard-high) solid var(--signal-critical-fill);
+}
+.hazard-summary-item[data-severity='high'] {
+  background: var(--signal-high-tint);
+  color: var(--signal-high);
+  border: var(--stroke-hazard-high) solid var(--signal-high);
+}
+.hazard-summary-item[data-severity='medium'] {
+  background: var(--signal-medium-tint);
+  color: var(--signal-medium);
+  border: var(--stroke-hazard-medium) solid var(--signal-medium);
+}
+.hazard-summary-item[data-severity='low'] {
+  color: var(--content);
+  border: var(--stroke-hazard-low) solid var(--control-border);
+}
+
+@media (forced-colors: active) {
+  .hazard-badge,
+  .hazard-summary-item {
+    border-color: CanvasText;
+  }
+}

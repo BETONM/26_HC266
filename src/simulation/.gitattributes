@@ -1,0 +1,6 @@
+* text=auto eol=lf
+
+*.blend binary
+*.png   binary
+*.obj   text eol=lf
+*.mtl   text eol=lf

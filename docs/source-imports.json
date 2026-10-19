@@ -1,0 +1,92 @@
+[
+  {
+    "repository": "https://github.com/armchemist/armchemist_agent",
+    "commit": "f0def03f76b5e532526bb49f91f03e20b20587a2",
+    "destination": "src/backend/agent",
+    "files": 63,
+    "excluded": []
+  },
+  {
+    "repository": "https://github.com/armchemist/NewUI",
+    "commit": "b2b445974e63b6cd8a0566283379d63ca9995725",
+    "destination": "src/frontend",
+    "files": 131,
+    "excluded": [
+      ".claude/agents/apple-design-reviewer.md",
+      "AGENTS.md",
+      "proposals/a.css",
+      "proposals/a.html",
+      "proposals/a.ts",
+      "proposals/b.css",
+      "proposals/b.html",
+      "proposals/b.ts",
+      "proposals/c.css",
+      "proposals/c.html",
+      "proposals/c.ts",
+      "proposals/d.css",
+      "proposals/d.html",
+      "proposals/d.ts",
+      "proposals/e.css",
+      "proposals/e.html",
+      "proposals/e.ts",
+      "proposals/f.css",
+      "proposals/f.html",
+      "proposals/f.ts",
+      "proposals/index.html",
+      "proposals/shared/app.ts",
+      "proposals/shared/base.css",
+      "proposals/shared/data.json",
+      "proposals/shared/engine.ts",
+      "proposals/shared/model.ts",
+      "proposals/tsconfig.json",
+      "rebuild-prompts/00-context.md",
+      "rebuild-prompts/01-foundation.md",
+      "rebuild-prompts/02-chat.md",
+      "rebuild-prompts/03-graph.md",
+      "rebuild-prompts/04-plan.md",
+      "rebuild-prompts/05-monitoring.md",
+      "rebuild-prompts/06-report.md",
+      "rebuild-prompts/README.md"
+    ]
+  },
+  {
+    "repository": "https://github.com/armchemist/PiSensorServer",
+    "commit": "c6d4638843fddc05559adce4f35482c7c56498e5",
+    "destination": "src/pi_sensor",
+    "files": 40,
+    "excluded": []
+  },
+  {
+    "repository": "https://github.com/armchemist/PiRobotControl",
+    "commit": "fab3944b7104bd2c6a28f39e476ff17a53c9e22a",
+    "destination": "src/robot",
+    "files": 10,
+    "excluded": []
+  },
+  {
+    "repository": "https://github.com/armchemist/humanoid_haed_app",
+    "commit": "204ce8026d5baa912ba49baecd8c35d69b2ca098",
+    "destination": "src/robot_face",
+    "files": 32,
+    "excluded": []
+  },
+  {
+    "repository": "https://github.com/armchemist/ImitationLearning",
+    "commit": "6bdb4512d769db78849d30a5bf50db30930b6381",
+    "destination": "src/imitation_learning",
+    "files": 8,
+    "excluded": [
+      "leader-control/omx_trajectory/data/chunk-000/episode_000000.parquet",
+      "omx_learning.ipynb"
+    ]
+  },
+  {
+    "repository": "https://github.com/armchemist/SimulationEnv",
+    "commit": "fe508eecd8739a0f17daf76d708c312894e91aeb",
+    "destination": "src/simulation",
+    "files": 70,
+    "excluded": [
+      "blender/lab_bench.blend"
+    ]
+  }
+]

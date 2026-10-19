@@ -1,0 +1,9 @@
+# Notebook's LeRobot commit, with matching PyTorch / torchvision / TorchCodec.
+torch==2.7.1
+torchvision==0.22.1
+torchcodec==0.5.0
+datasets==3.6.0
+huggingface-hub==0.34.4
+diffusers==0.34.0
+# Use the source archive so installation does not require Git LFS.
+lerobot @ https://github.com/huggingface/lerobot/archive/989f3d05ba47f872d75c587e76838e9cc574857a.tar.gz

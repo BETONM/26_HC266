@@ -1,0 +1,321 @@
+/*
+ * 디자인 토큰. 컴포넌트는 여기 정의된 커스텀 속성만 참조하고 색·크기 값을 직접 쓰지 않는다.
+ * 근거와 명암비는 README '디자인 토큰' 절에 있다.
+ *
+ * 3단계 뒤 다시 정했다(시안 F). 사용자가 준 팔레트:
+ *   Primary #0056FF · Hover #2277FF · 바탕 #FFFFFF · 강조 카드 #E3E7FC · 제목 #000000
+ *   히어로 = Futurewave 그라데이션, 어두운 영역 = Midnight Surge 그라데이션(둘 다 값이 없어 Primary를 축으로 정의)
+ *
+ * 첫째 규칙은 그대로: 실험 직전에 쓰는 도구라, 어느 화면에서든 위험이 가장 먼저·가장 무겁게 읽힌다.
+ * 위험의 신호색(빨강·주황·노랑)은 Hazard에만 쓰고, 파랑과 겹치지 않는다.
+ */
+
+:root {
+  /* ── 색: 역할 ── 라이트 기본, 다크는 아래 prefers-color-scheme에서 덮어쓴다 */
+  --surface: #f2f3f7; /* 화면 바탕: 은은한 회색. 카드가 흰 면으로 떠 보이게(흰 카드 1.11) */
+  --surface-raised: #ffffff; /* 카드. 바탕 위 흰 면 + --separator 테두리 */
+  --surface-inset: #f1f3fd; /* 입력란·단추 묶음처럼 카드 안에 들어간 면 */
+  --surface-hover: #eef1fd;
+  --highlight: #e3e7fc; /* 강조 카드(레일·구성 확정·빠른 보기)와 내 말풍선 */
+  --heading: #000000; /* 큰 제목 */
+  --content: #0b1020; /* 본문. 흰 바탕 18.9 */
+  --content-secondary: #4a5270; /* 흰 바탕 7.69, 강조 카드 위 6.26 */
+  --placeholder: var(--content-secondary);
+  --content-disabled: #858ca6; /* WCAG 예외. 비활성 이유는 글로도 알린다 */
+  --control-border: #7d859f; /* 비텍스트 3:1 — 흰 카드 3.67, 회색 바탕 3.31 */
+  --separator: #e3e7fc; /* 카드 테두리. 장식용 */
+
+  /* 파랑: 주 동작(보내기·구성 확정·실행 시작), 현재 단계, 구성 중인 실험이 고른 것과 이번 계획 버전에서 바뀐 동작.
+     넷 다 '지금 여기'를 가리킨다. 그 밖의 뜻은 지지 않는다 */
+  --accent: #0056ff; /* 흰 바탕 5.56 */
+  --accent-hover: #2277ff;
+  --accent-strong: #0056ff; /* 흰 바탕 위 글자·선. 다크에서는 밝힌다 */
+  --accent-tint: #e3e7fc;
+  --on-accent: #ffffff; /* 5.56 */
+
+  /* 히어로(첫 화면의 그래프 카드)와 어두운 영역(위험 요약 카드) */
+  /* 흰 12px 이름표가 카드 어디에서나 읽히도록 가장 밝은 곳도 흰 글자 5.4:1 이상으로 눌렀다(#0068C9 5.49) */
+  --hero: linear-gradient(135deg, #0048e0 0%, #0056ff 35%, #4a4fd9 70%, #0068c9 100%);
+  /* 가장 밝은 끝(#0056FF)에서도 흰 글자 5.56, 보조 글자(#E3E9FF) 4.5를 넘긴다 */
+  --feature: linear-gradient(150deg, #0a2e9a 0%, #0047d9 55%, #0056ff 100%);
+  --feature-solid: #0047d9; /* 그라데이션 위 기호 안쪽 면 */
+  --on-feature: #ffffff;
+  --on-feature-secondary: #e3e9ff;
+  --feature-critical-text: #b42318; /* 흰 배지 위 6.57 */
+  /* 히어로·어두운 카드 위의 컨트롤과 그래프. 파란 면 위에서 흰색을 옅게 겹쳐 쓴다 */
+  /* 칩·단추 바탕은 흰색을 겹치면 흰 글자 대비가 떨어진다. 남색을 겹쳐 오히려 높인다 */
+  --hero-control: rgb(0 24 110 / 0.24);
+  --hero-control-hover: rgb(0 24 110 / 0.38);
+  --hero-control-border: rgb(255 255 255 / 0.45);
+  --hero-node-muted: rgb(255 255 255 / 0.74);
+  --hero-edge: rgb(255 255 255 / 0.66); /* 히어로 어디서나 3:1 이상(최소 3.24) */
+  /* 묶음 필터는 알파를 세게 키우므로 반투명 색 대신 흰색 + 묶음 불투명도(--hero-pool-opacity)로 옅게 한다 */
+  --hero-pool: #ffffff;
+  --hero-pool-hot: #ffffff;
+  --hero-pool-opacity: 0.16;
+  --hero-pool-opacity-hot: 0.26;
+  --hero-label-halo: rgb(0 50 190 / 0.35);
+  /* 파란 면 위에서는 빨강·주황이 3:1에 못 미친다(#FF8A8A 2.45). 위험 기호 뒤에 흰 원을, 이름표 둘레에 흰 테를 깔고
+     그 위에 라이트 신호색을 그대로 쓴다(흰 바탕 6.57 · 5.43 · 5.93). 신호색과 대비를 둘 다 지킨다 */
+  --hero-hazard-disc: #ffffff;
+  --hero-hazard-ink: #0b1020; /* 흰 원·흰 테 위의 낮음·보통 기호와 이름표 */
+  --hero-signal-critical: #b42318;
+  --hero-signal-high: #b54708;
+  --hero-signal-medium: #8a5a00;
+
+  /* ── 위험 심각도: Hazard 전용. 순서는 채움 무게 + 모양 + 글자로 싣는다 ── */
+  --signal-critical-fill: #b42318; /* 칠한 면. 면 대 바탕 6.57 */
+  --on-signal-critical: #ffffff; /* 6.57 */
+  --signal-high: #b54708; /* 글자·2px 테두리. 틴트 위 4.86 */
+  --signal-high-tint: #fef0e6;
+  --signal-medium: #8a5a00; /* 글자·1.5px 테두리. 틴트 위 5.36 */
+  --signal-medium-tint: #fdf3d8;
+  /* low는 신호색 없이 --content 글자 + --control-border 테두리 + 빈 원 + '낮음' */
+
+  --stroke-hazard-high: 2px;
+  --stroke-hazard-medium: 1.5px;
+  --stroke-hazard-low: 1px;
+  --stroke-selected: 2px; /* 선택은 --content 외곽선 */
+  --stroke-pick: 1.5px; /* 구성 중인 실험이 고른 노드의 테두리. 위험 고리(2px)보다 가볍다 */
+
+  /* ── 그래프 ── */
+  --graph-node: #0b1020; /* 시약·실험 */
+  --graph-node-muted: #8a92ae; /* 기구·장비·생성물(3.09) */
+  --graph-node-core: #ffffff;
+  --graph-edge: #8a92ae; /* 3.09 */
+  --graph-pool: #eef1fd; /* 보관 위치 묶음 */
+  --graph-pool-hot: #e3e7fc;
+  --graph-label: #0b1020;
+  --graph-label-secondary: #4a5270;
+  --graph-label-halo: #ffffff;
+  --graph-halo-width: 4px;
+  --stroke-group-edge: 2.2px; /* 묶음으로 가는 점선. 점이 보일 만큼 굵다 */
+  /* 그래프 이름표 크기. GraphCanvas의 labelPx와 같은 값이어야 겹침 계산이 맞는다 */
+  --text-graph-experiment: 0.875rem;
+  --text-graph-formula: 0.84375rem;
+  --weight-graph-formula: 650;
+  --graph-dim-opacity: 0.18;
+  --graph-dim-opacity-hazard: 0.55;
+
+  /* ── 포커스 ── box-shadow가 아니라 outline. 강제 색상 모드에서도 남는다 */
+  --focus-ring-color: #0056ff;
+  --focus-ring: 2px solid var(--focus-ring-color);
+  --focus-offset: 2px;
+
+  /* ── 글꼴 ── Pretendard 하나. 크기와 굵기로만 위계를 만든다 */
+  --font-sans:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo',
+    'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  /* 고정폭은 대조하는 값(CAS·로트·좌표·id)에만 쓴다 */
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --text-caption: 0.75rem;
+  --leading-caption: 1.33;
+  --weight-caption: 500;
+  --text-footnote: 0.8125rem;
+  --leading-footnote: 1.38;
+  --text-body: 0.9375rem; /* 한국어 본문. 좁은 폭에서 17px */
+  --leading-body: 1.6;
+  --text-label: var(--text-body);
+  --leading-label: 1.45;
+  --weight-label: 600;
+  --text-title3: 1.0625rem;
+  --leading-title3: 1.41;
+  --weight-title3: 700;
+  --text-title2: 1.25rem;
+  --leading-title2: 1.4;
+  --weight-title2: 700;
+  --text-title1: 1.5rem;
+  --leading-title1: 1.33;
+  --weight-title1: 700;
+  /* 첫 화면 히어로 제목. 이 화면에서만 쓴다 */
+  --text-hero: 2.125rem;
+  --leading-hero: 1.2;
+  --weight-hero: 750;
+  --tracking-hero: -0.025em;
+  /* 위험 요약의 큰 숫자 */
+  --text-figure: 2.75rem;
+  /* iOS Safari는 16px 미만 입력란에 포커스하면 화면을 확대한다 */
+  --text-input-min: 1rem;
+
+  /* ── 간격·모서리·그림자·크기 ── */
+  --space-half: 0.125rem;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  /* 단추·입력은 알약, 카드는 크기에 따라 둥글기가 다르다(큰 카드일수록 크게) */
+  --radius-control: 999px;
+  --radius-small: 0.375rem; /* 체크 상자, 표 안 칩 */
+  --radius-panel: 1.25rem; /* 대화상자·노드 상세·작은 카드 */
+  --radius-card: 1.5rem; /* 요약 열 카드 */
+  --radius-card-large: 1.75rem; /* 채팅·그래프 카드 */
+  --radius-pill: 999px;
+  /* 그림자는 첫 화면 히어로 위에 떠 있는 입력창과 노드 설명 카드에만 쓴다 */
+  --shadow-float: 0 1.125rem 2.5rem -1.125rem rgb(0 20 90 / 0.45);
+  --control-height: 2.25rem;
+  --control-height-large: 3rem;
+  --control-height-compact: 1.75rem; /* 칸 머리의 글 단추처럼 낮게 둘 데스크톱 컨트롤(28px) */
+  --border-width: 1px;
+  --composer-max-width: 40rem;
+  --composer-max-height: 10rem;
+  --message-error-text-min: 12rem;
+  --detail-panel-width: 22rem;
+  /* 대화상자 뒤를 덮는 막. 라이트·다크 모두 같은 값이다. */
+  --scrim: rgb(5 8 26 / 0.5);
+  --dialog-max-width: 36rem;
+  --label-grid-key-width: 5.5rem;
+  --checkbox-size: 1.25rem;
+  --list-max-width: 56rem;
+  --hover-card-max-width: 17.5rem;
+  /* 계획 한 줄(번호 · 동작 · 표시)이 한눈에 읽히는 폭. 번호 칸은 두 자리. */
+  --plan-max-width: 44rem;
+  --plan-number-width: 2.5ch;
+  /* 위에 붙는 바뀐 버전 요약 줄의 높이만큼 바뀐 동작을 내려 세운다. 두 줄로 접혀도 가리지 않게 넉넉히. */
+  --plan-change-clearance: 5rem;
+  /* 바뀐 동작의 막대·테두리·글자. 다크에서도 하이라이트 면 위 3:1을 넘게 --accent-strong을 쓴다(라이트 4.53, 다크 6.14). */
+  --plan-changed-mark: var(--accent-strong);
+  --plan-changed-surface: var(--highlight);
+  --icon-small: 0.875rem;
+
+  /* 모니터링 */
+  --status-dot: 0.625rem; /* 상태 점(실행·장치·진행). 모양으로 상태를 가른다 */
+  --progress-height: 0.5rem;
+  --spark-height: 1.75rem; /* 센서 칸 안의 최근 흐름 */
+  --monitor-devices-width: 19rem;
+  --monitor-device-min: 9.5rem; /* 장치 한 칸(점 + 이름 + 상태)의 최소 폭 */
+  --monitor-table-max-height: 60dvh;
+  --log-time-width: 4.75rem;
+  --modal-wide-width: 72rem;
+
+  /* 보고서 차트. 지표 색 자리 다섯. 흰 카드 위 선 3:1 이상(5.47 · 6.29 · 6.32 · 5.02 · 7.58).
+     빨강은 위험·비상 정지에만 쓰므로 지표 색에서 뺐다. 인쇄·흑백에서는 선 굵기와 점선이 지표를 가른다 */
+  --chart-1: #0f766e;
+  --chart-2: #4f46e5;
+  --chart-3: #a21caf;
+  --chart-4: #b45309;
+  --chart-5: #475569;
+  --chart-event: #5c6480; /* 사건 세로선. 흰 카드 5.85 */
+  --chart-span: #f6efe0; /* 보정 구간 음영. 그 위 지표 선도 4.39 이상 */
+  --chart-span-pause: var(--surface-inset); /* 일시정지 구간 */
+  --chart-height: 18rem;
+  --chart-print-height: 14.5rem;
+  --report-max-width: 64rem;
+  --tracking-control: 0.04em; /* 대문자 약어(E-STOP)를 작게 쓸 때 */
+  /* 영상 뒤 바탕과 그 위 글자. 카메라 화면은 라이트·다크와 상관없이 어둡다. #e3e9ff / #05081a 17.0 */
+  --video-backdrop: #05081a;
+  --on-video: #e3e9ff;
+
+  /* ── 배치: 레일 | 채팅 카드 | 그래프 카드 | 요약 열 ── */
+  --gap: 1rem;
+  --rail-width: 4rem;
+  --rail-button: 2.75rem;
+  --chat-width: 23.75rem;
+  --side-width: 18.75rem;
+  --rail-height-narrow: 3.75rem; /* 좁은 폭에서 레일은 위쪽 막대 */
+  --pane-bar-height: 3rem;
+  --confirm-strip-height: 4.5rem;
+  --graph-head-landing: 8.25rem; /* 첫 화면 제목 자리 */
+  --graph-head: 5.25rem;
+  --graph-foot-landing: 9.5rem; /* 첫 화면에서 떠 있는 입력창과 예시 칩 */
+
+  /* ── 모션: 진입 전환 한 곳에 공을 들인다 ── */
+  --motion-enter: 600ms; /* 그래프 카드가 줄어들고 히어로가 걷힌다. GraphPanel의 ENTER_MS와 같다 */
+  --motion-fade: 450ms;
+  --motion-fit: 160ms;
+  --motion-delay: 0.2s; /* 그래프 카드가 줄어들기 시작한 뒤 채팅·요약 카드가 들어온다 */
+  --ease-enter: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #05081a;
+    --surface-raised: #0b1129;
+    --surface-inset: #141c3d;
+    --surface-hover: #18224d;
+    --highlight: #18224d;
+    --heading: #ffffff;
+    --content: #eef1ff; /* 카드 위 16.9 */
+    --content-secondary: #a9b2d6; /* 8.58 */
+    --content-disabled: #6b759e;
+    --control-border: #5a6595; /* 3.17 */
+    --separator: #1c2753;
+    --chart-1: #2dd4bf; /* 카드 위 10.0 */
+    --chart-2: #a5b4fc;
+    --chart-3: #f0abfc;
+    --chart-4: #fbbf24;
+    --chart-5: #cbd5e1;
+    --chart-event: #a9b2d6;
+    --chart-span: #2a2414;
+
+    --accent: #0056ff; /* 단추 면. 흰 글자 5.56 */
+    --accent-hover: #2277ff;
+    --accent-strong: #7aa2ff; /* 카드 위 글자·선 7.0 */
+    --accent-tint: #18224d;
+    --on-accent: #ffffff;
+
+    --signal-critical-fill: #ff8f85;
+    --on-signal-critical: #05081a;
+    --signal-high: #fdb27a;
+    --signal-high-tint: #3a2414;
+    --signal-medium: #f2c94c;
+    --signal-medium-tint: #33290f;
+
+    --graph-node: #dfe5ff;
+    --graph-node-muted: #6c76a3;
+    --graph-node-core: #0b1129;
+    --graph-edge: #5a6595;
+    --graph-pool: #111a3a;
+    --graph-pool-hot: #18224d;
+    --graph-label: #eef1ff;
+    --graph-label-secondary: #a9b2d6;
+    --graph-label-halo: #0b1129;
+
+    --focus-ring-color: #8fb0ff;
+    --shadow-float: 0 1.125rem 2.5rem -1rem rgb(0 0 0 / 0.7);
+  }
+}
+
+/* 대비 높이기: 카드 경계가 미세한 바탕 차이에만 기대지 않게 한다 */
+@media (prefers-contrast: more) {
+  :root {
+    --content-secondary: var(--content);
+    --control-border: #4a515c;
+    --separator: var(--control-border);
+    --graph-edge: var(--control-border);
+    --stroke-hazard-medium: 2px;
+  }
+}
+
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  :root {
+    --control-border: #a9b2d6;
+  }
+}
+
+/* 좁은 폭·터치: 모바일 기본 크기에 맞춘다 */
+@media (pointer: coarse), (max-width: 48rem) {
+  :root {
+    --text-body: 1.0625rem;
+    --control-height: 2.75rem;
+    --text-hero: 1.625rem;
+  }
+}
+
+/* 중간 폭: 열을 조금씩 좁힌다 */
+@media (max-width: 80rem) {
+  :root {
+    --chat-width: 20.5rem;
+    --side-width: 16.25rem;
+  }
+}
+
+@media (max-width: 64rem) {
+  :root {
+    --chat-width: 18rem;
+    --side-width: 14.5rem;
+  }
+}

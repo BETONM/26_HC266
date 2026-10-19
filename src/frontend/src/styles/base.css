@@ -1,0 +1,70 @@
+/* 전역 기본. 값은 모두 tokens.css의 커스텀 속성에서 온다. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--surface);
+  color: var(--content);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  /* 한국어는 단어 중간에서 끊기면 읽기 어렵다. */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+  font-size: max(var(--text-body), var(--text-input-min));
+}
+
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+  }
+}
+
+/* 화면에는 보이지 않고 스크린 리더에만 읽힌다. */
+.sr-only {
+  position: absolute;
+  width: var(--border-width);
+  height: var(--border-width);
+  margin: calc(-1 * var(--border-width));
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* 날짜·시각처럼 중간에서 끊기면 읽기 어려운 묶음 */
+.nowrap {
+  white-space: nowrap;
+}

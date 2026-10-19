@@ -1,0 +1,25 @@
+# ros_gz_bridge topic map, shared by every layout variant.
+# Loaded by parameter_bridge via the `config_file` parameter.
+#
+# The rail plugins publish on world-independent topics, so the same file
+# works for both lab_bench.world and lab_bench_3zone.world.
+
+- ros_topic_name: "/clock"
+  gz_topic_name: "/clock"
+  ros_type_name: "rosgraph_msgs/msg/Clock"
+  gz_type_name: "gz.msgs.Clock"
+  direction: GZ_TO_ROS
+
+# Rail carriage: commanded position in metres, +/-0.42 from the rail centre.
+- ros_topic_name: "/rail_axis/carriage_slide/cmd_pos"
+  gz_topic_name: "/rail_axis/carriage_slide/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# Rail carriage joint state (position / velocity / effort).
+- ros_topic_name: "/rail_axis/joint_states"
+  gz_topic_name: "/rail_axis/joint_state"
+  ros_type_name: "sensor_msgs/msg/JointState"
+  gz_type_name: "gz.msgs.Model"
+  direction: GZ_TO_ROS

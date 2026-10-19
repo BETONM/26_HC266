@@ -1,0 +1,284 @@
+/*
+ * 그래프 그림. 노드는 상자 대신 점과 짧은 이름표다(실험·화학식·높음 이상 위험만 늘 이름을 단다).
+ * 무게 사다리는 그대로: critical(칠한 팔각형) > high(채운 삼각형) > medium(반 채운 원) > 구성 중 실험의 테두리 > low > 중립.
+ * 노드 크기는 엔진이 transform의 scale로 정한다. 선 두께는 화면 px로 남긴다(vector-effect).
+ */
+
+.graph-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  font-family: var(--font-sans);
+}
+
+.graph-canvas:active {
+  cursor: grabbing;
+}
+
+/* ── 보관 위치 묶음 ── */
+
+.graph-pool circle {
+  fill: var(--graph-pool);
+  transition: fill var(--motion-fade) var(--ease-enter);
+}
+
+.graph-pool:is([data-hot], [data-tint]) circle {
+  fill: var(--graph-pool-hot);
+}
+
+/* 묶음 이름·엣지 글자는 월드 좌표에 그린다. --graph-label-scale(엔진)이 화면 12px 이상을 지킨다. */
+.graph-pool-label {
+  fill: var(--graph-label-secondary);
+  font-size: calc(var(--text-caption) * var(--graph-label-scale, 1));
+  font-weight: var(--weight-label);
+  pointer-events: none;
+}
+
+.graph-pool-label[data-cull],
+.graph-edge-label[data-cull] {
+  opacity: 0;
+}
+
+/* ── 엣지 ── */
+
+.graph-edge line {
+  stroke: var(--graph-edge);
+  stroke-width: var(--border-width);
+  vector-effect: non-scaling-stroke;
+  transition:
+    stroke var(--motion-fade) var(--ease-enter),
+    opacity var(--motion-fit);
+}
+
+/* 가리킬 때만 보이는 선: 낱낱의 기구·장비, 시약이 직접 만드는 생성물 */
+.graph-edge[data-show='focus']:not([data-active]) {
+  display: none;
+}
+
+.graph-edge[data-type='REACTS_WITH'] line {
+  stroke-dasharray: 3 4;
+}
+
+/* 묶음으로 가는 선(기구·장비 여러 개를 합친 것)은 점선 */
+.graph-edge[data-type='GROUP'] line {
+  stroke-dasharray: 0.1 6;
+  stroke-linecap: round;
+  stroke-width: var(--stroke-group-edge);
+}
+
+.graph-edge[data-tint] line {
+  stroke: var(--content-secondary);
+}
+
+.graph-edge[data-severity='critical'] line {
+  stroke: var(--signal-critical-fill);
+  stroke-width: var(--stroke-hazard-high);
+}
+
+.graph-edge[data-severity='high'] line {
+  stroke: var(--signal-high);
+  stroke-width: var(--stroke-hazard-high);
+}
+
+.graph-edge[data-severity='medium'] line {
+  stroke: var(--signal-medium);
+  stroke-width: var(--stroke-hazard-medium);
+}
+
+.graph-edge[data-active] line {
+  stroke: var(--content);
+  stroke-width: var(--stroke-hazard-high);
+}
+
+.graph-edge[data-dim] {
+  opacity: var(--graph-dim-opacity);
+}
+
+/* 흐릴 때도 위험은 읽혀야 한다. 실험 직전 도구에서 critical 위험이 탐색 중에 사라지면 안 된다. */
+.graph-edge[data-dim][data-severity],
+.graph-node[data-dim][data-severity] {
+  opacity: var(--graph-dim-opacity-hazard);
+}
+
+.graph-edge-label {
+  fill: var(--content);
+  font-size: calc(var(--text-caption) * var(--graph-label-scale, 1));
+  font-weight: var(--weight-caption);
+  paint-order: stroke;
+  stroke: var(--graph-label-halo);
+  stroke-width: calc(var(--graph-halo-width) * var(--graph-label-scale, 1));
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+/* ── 노드 ── */
+
+.graph-node {
+  cursor: pointer;
+  outline: none;
+  transition: opacity var(--motion-fit);
+}
+
+.graph-node[data-dim] {
+  opacity: var(--graph-dim-opacity);
+}
+
+.node-hit {
+  fill: transparent;
+}
+
+.node-shape {
+  fill: var(--graph-node);
+  transition:
+    fill var(--motion-fade) var(--ease-enter),
+    stroke var(--motion-fade) var(--ease-enter);
+}
+
+.graph-node:is([data-label='Equipment'], [data-label='Device']) .node-shape {
+  fill: var(--graph-node-muted);
+}
+
+.graph-node[data-label='Product'] .node-shape {
+  fill: var(--graph-label-halo);
+  stroke: var(--graph-node-muted);
+  stroke-width: 1.6;
+}
+
+.graph-node[data-label='Experiment'] .node-shape {
+  fill: var(--graph-node);
+}
+
+.node-core {
+  fill: var(--graph-node-core);
+  transition: fill var(--motion-fade) var(--ease-enter);
+}
+
+.node-cross {
+  fill: none;
+  stroke: var(--graph-node);
+  stroke-width: 1.6;
+}
+
+/* 재고 부족·만료: 점선 고리. 색이 아니라 모양으로, 글자는 상세·설명 카드에 있다. */
+.node-status {
+  fill: none;
+  stroke: var(--graph-label-secondary);
+  stroke-width: 1.3;
+  stroke-dasharray: 2 2.5;
+}
+
+.node-glyph {
+  overflow: visible;
+  color: var(--content);
+}
+.graph-node[data-severity='critical'] .node-glyph {
+  color: var(--signal-critical-fill);
+}
+.graph-node[data-severity='high'] .node-glyph {
+  color: var(--signal-high);
+}
+.graph-node[data-severity='medium'] .node-glyph {
+  color: var(--signal-medium);
+}
+
+.node-halo,
+.node-changed,
+.node-focus {
+  fill: none;
+  stroke: none;
+  pointer-events: none;
+}
+
+/* 매우 높음은 늘 신호색 고리를 단다. 그래프에서 가장 먼저 눈에 걸리는 표시가 위험이어야 한다. */
+.graph-node[data-severity='critical'] .node-halo {
+  stroke: var(--signal-critical-fill);
+  stroke-width: var(--stroke-hazard-high);
+}
+
+.node-disc {
+  display: none;
+}
+
+/* 구성 중인 실험이 고른 것: 파란 테두리. 위험에는 붙이지 않는다. */
+.graph-node[data-tint] .node-halo {
+  stroke: var(--accent-strong);
+  stroke-width: var(--stroke-pick);
+}
+
+.graph-node[data-draft] .node-core {
+  fill: var(--accent);
+}
+
+/* 선택: --content 2px. 키보드 포커스는 링 색과 굵기가 다르다. */
+.graph-node[data-selected] .node-halo {
+  stroke: var(--content);
+  stroke-width: var(--stroke-selected);
+}
+
+/* 키보드 포커스는 고른 것·선택 고리 바깥 한 겹(r+10). 색이 비슷해도 자리로 갈린다. */
+.graph-node:focus-visible .node-focus {
+  stroke: var(--focus-ring-color);
+  stroke-width: var(--stroke-selected);
+}
+
+/* 이번 답에서 새로 생기거나 바뀐 노드. 몇 초 뒤 사라진다. 움직임 없이 점선 링만. */
+.graph-node[data-changed] .node-changed {
+  stroke: var(--content);
+  stroke-width: var(--border-width);
+  stroke-dasharray: 4 3;
+}
+
+/* ── 이름표 ── 엔진이 보일 것만 data-label-on을 단다 */
+
+/* 노드 안 이름표는 노드 배율 안에 있다. --graph-label-ratio(엔진)로 키워 화면 12px 이상을 지킨다. */
+.node-label {
+  fill: var(--graph-label);
+  font-size: calc(var(--text-caption) * var(--graph-label-ratio, 1));
+  font-weight: var(--weight-label);
+  paint-order: stroke;
+  stroke: var(--graph-label-halo);
+  stroke-width: calc(var(--graph-halo-width) * var(--graph-label-ratio, 1));
+  stroke-linejoin: round;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity var(--motion-fit),
+    fill var(--motion-fade) var(--ease-enter);
+}
+
+.graph-node[data-label-on] .node-label {
+  opacity: 1;
+}
+
+.node-label-formula {
+  font-size: calc(var(--text-graph-formula) * var(--graph-label-ratio, 1));
+  font-weight: var(--weight-graph-formula);
+}
+
+.graph-node[data-label='Experiment'] .node-label {
+  font-size: calc(var(--text-graph-experiment) * var(--graph-label-ratio, 1));
+  font-weight: var(--weight-title1);
+}
+
+.graph-node[data-severity='critical'] .node-label {
+  fill: var(--signal-critical-fill);
+  font-weight: var(--weight-title1);
+}
+
+.graph-node[data-severity='high'] .node-label {
+  fill: var(--signal-high);
+}
+
+@media (forced-colors: active) {
+  .node-shape,
+  .graph-edge line {
+    stroke: CanvasText;
+  }
+  .graph-node:focus-visible .node-focus,
+  .graph-node[data-selected] .node-halo {
+    stroke: Highlight;
+  }
+}
