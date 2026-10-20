@@ -208,7 +208,7 @@ flowchart LR
 
 ### 발표 자료
 
-[ARMChemist 발표 자료 (Canva)](https://canva.link/0p77va368apy4tb)
+[![ARMChemist 발표 자료](assets/presentation_cover.png)](https://canva.link/0p77va368apy4tb)
 
 ### 작품 소개 영상
 
