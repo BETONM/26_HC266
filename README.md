@@ -225,15 +225,48 @@ flowchart LR
 
 ## 5. 핵심 소스코드
 
-### 기능별 구현 설명
+### 5-1. AI Agent — 자연어 요청을 실행 계획으로 변환
 
-<!-- 아래 항목을 기능별로 복사해 작성하세요. -->
+사용자의 요청과 그래프 정보를 바탕으로 등록된 ACT 스킬의 순서를 구성합니다. 각 스킬의 선행 조건을 검사하고, 작업 위치가 바뀌면 레일 이동을 계획에 추가합니다. 예를 들어 시약병을 잡지 않은 상태에서 뚜껑을 여는 계획은 실행 전에 거부합니다.
 
-#### [기능명]
+**동작 흐름:** 자연어 요청 → ACT 스킬 선택 → 선행 조건 검증·레일 이동 삽입 → 사용자 확정 및 실행 요청
 
-- **기능 설명:**
-- **동작 흐름:**
-- **주요 모듈:**
+| 주요 소스 | 역할 |
+|---|---|
+| [openai_client.py](src/backend/agent/armchemist/openai_client.py) · `OpenAIPlanner` | 대화와 그래프를 입력받아 등록된 ACT 목록 안에서 실행 순서 생성 |
+| [registry.py](src/backend/agent/armchemist/registry.py) · `CAPABILITIES` | 9개 ACT의 작업 위치, 사용 팔, 선행 조건과 실행 후 상태 정의 |
+| [planning.py](src/backend/agent/armchemist/planning.py) · `compile_plan()` | 동작 순서 검증 및 스테이션 간 레일 이동 단계 삽입 |
+| [api.py](src/backend/agent/armchemist/api.py) | 채팅·구성 확정·실행 API, 계획 버전 확인 및 중복 실행 차단 |
+
+### 5-2. ACT 실행부 — 로봇 조작과 완료 판정
+
+선택된 ACT 모델을 로드해 설정된 평균 시간만큼 실행하고, 로봇팔의 정지를 확인한 뒤 최신 카메라 영상으로 완료 여부를 판정합니다. 미완료이면 최대 총 3회 실행하며, 판정 통신 오류는 판정 요청만 재시도합니다.
+
+**동작 흐름:** 모델 로드 → ACT 실행 → 현재 자세 유지·정지 확인 → 최신 영상 판정 → 다음 스킬 진행 또는 재시도
+
+| 주요 소스 | 역할 |
+|---|---|
+| [runtime.py](src/backend/agent/armchemist/runtime.py) · `Runner.run()` | ACT 순차 실행, 완료 판정·재시도, 중단 처리 및 실행 이력 기록 |
+| [physical_node.py](src/backend/agent/armchemist/physical_node.py) · `AgentPhysicalAIServer` | ROBOTIS `PhysicalAIServer`를 확장해 모델 로드, 추론 시간 관리, 양팔·그리퍼 자세 유지 및 정지 확인 |
+| [ros.py](src/backend/agent/armchemist/ros.py) | rosbridge 서비스 호출과 카메라 토픽 수신, 정지 이후 영상 확보 |
+| [openai_client.py](src/backend/agent/armchemist/openai_client.py) · `DecisionsJudge` | 동작별 완료 조건과 카메라 영상으로 완료 여부 판정 |
+| [main.yaml](src/backend/agent/config/main.yaml) | ACT별 체크포인트, FPS, 평균 실행 시간, 카메라·관절 설정 |
+
+> 현재 붓기 동작(`pour_bottle`, `pour_cylinder`)은 `mean_window` 설정으로 평균 시간 실행 후 정지를 확인해 종료합니다. 영상 판정이나 실제 투입량 검증은 수행하지 않습니다.
+
+### 5-3. 로봇팔·공유 레일 연동
+
+로봇팔이 정지한 상태에서 보정된 관절 범위를 확인한 뒤 레일 이동을 요청합니다. 명령 ID로 실행 결과를 추적하고, 목표 스테이션 도착을 확인한 후 다음 ACT를 시작합니다.
+
+**동작 흐름:** 로봇팔 정지·이동 허용 범위 확인 → 레일 명령 발행 → 목표 스테이션 도착 확인 → 다음 ACT 실행
+
+| 주요 소스 | 역할 |
+|---|---|
+| [rail.py](src/backend/agent/armchemist/rail.py) · `CentralRail` | 중앙 서버에 레일 이동·정지 요청, 명령 결과와 도착 상태 확인 |
+| [state.py](src/pi_sensor/central/state.py) · `Store` | 로봇팔 확인의 유효시간·재사용 여부 검사, 중복 명령 및 결과 미확인 상태의 새 이동 차단 |
+| [stations.py](src/pi_sensor/server/hardware/stations.py) · `Stations` | 작업 스테이션 좌표 관리 및 레일 보정 상태 검사 |
+
+설치·장비 설정은 [Agent 실행 안내](src/backend/agent/README.md), 테스트 및 실장비 검증 현황은 [검증 기록](src/backend/agent/docs/verification.md)을 참고하세요.
 
 ---
 
